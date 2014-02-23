@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" ng-app="whatToDo">
+<head>
+    <meta charset="utf-8">
+    <title>What-to-do? App</title>
+    
+    
+    <link rel="stylesheet" href="libs/bootstrap-3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="libs/bootstrap-3.1.1/css/bootstrap-theme.min.css" />
+    
+    <link rel="stylesheet" href="styles/app.css"/>
+    <link rel="stylesheet" href="styles/jumbotron-narrow.css"/>
+    
+    <script type="text/javascript" src="libs/chart-js/Chart.min.js"></script>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="header">
+            <ul class="nav nav-pills pull-right">
+                <li class="active"><a href="#/home">Home</a></li>
+                <li><a href="#/app">The App</a></li>
+                <li><a href="#/contact">Contact</a></li>
+            </ul>
+            <h3 class="text-muted">What-to-do? App</h3>
+        </div>
+    
+        <div class="view" ng-view></div>
+    
+        <div class="footer">
+            <p>&copy; What-to-do? App 2014, Some rights reserved</p>
+            <p>We recommend to use Chrome for better experience</p>
+        </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <!-- In production use:
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+    -->
+    
+    <script src="libs/angular/angular.min.js"></script>
+    <script src="libs/angular/angular-route.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services.js"></script>
+    <script src="scripts/controllers.js"></script>
+    <script src="scripts/filters.js"></script>
+    <script src="scripts/directives.js"></script>
+</body>
+</html>
