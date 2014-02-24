@@ -1,27 +1,68 @@
 
 <div class="row add">
-    <div class="col-lg-6">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Add some choices..." ng-model="newChoice" ng-enter="addChoice()" />
-            <span class="input-group-btn">
-                <button class="btn btn-success" type="button" ng-click="addChoice()">Add</button>
-            </span>
-        </div><!-- /input-group -->
+    <div class="col-lg-9">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Here is what we need to help you</h3>
+            </div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <span class="input-group-addon">What to do?</span>
+                    <input type="text" class="form-control" ng-model="question" placeholder="What do you want to ask?">
+                </div>
+                <br />
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Add some choices..." ng-model="newChoice" ng-enter="addChoice()" />
+                    <span class="input-group-btn">
+                        
+                        <button class="btn btn-success" type="button" ng-click="addChoice()">Add</button>
+                        <!--<input type="button" class="btn btn-danger" value="Clear all" />-->
+                    </span>
+                </div><!-- /input-group -->
+                
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="choice in items">
+                        
+                        <span class="label label-danger removeBadge" ng-click="removeChoice(choice)">x</span>
+                        <span class="badge" style="background-color: {{ choice.color }}"> {{ choice.id }} </span>
+                        {{ choice.name }}
+                    </li>
+                </ul>
+                
+            </div>
+            
+        </div>
         
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="choice in items">
-                <span class="badge" style="background-color: {{ choice.color }}">{{ choice.name.id }}</span>
-                {{ choice.name.name }}
-            </li>
-        </ul>
+        <br />
+        <div id="divAnswer" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><strong>Question:</strong> {{ question }}</h3>
+            </div>
+            <div class="panel-body text-left">
+                <p><strong>Our answer:</strong> <span id="resultBadge" class="badge"></span> <span id="resultName"></span></p>
+                <br />
+                <p>We hope you are satisfied with the response and you will ask us for help again. Good Luck!</p>
+            </div>
+        </div>
+        
+        <input type="button" class="btn btn-primary" ng-show="askButton" ng-click="randomize()" value="Ask me" />
+        
+
     </div><!-- /.col-lg-6 -->
     
 </div><!-- /.row -->
 
 <div class="animation">                                                                 
     <canvas id="canvas" height="450" width="450"></canvas>
-    <input type="button" id="ask-button" class="btn btn-primary btn-lg" ng-show="askButton" ng-click="randomize()" value="Ask me" />
+    <!--<input type="button" id="ask-button" class="btn btn-primary btn-lg"  ng-click="randomize()" value="Ask me" />-->
     <div id="divResult" class="result" ng-show="askResult">?</div>
+</div>
+
+<div class="alert alert-warning text-left">
+    <p><strong>Warning!</strong></p>
+    <p>You have to know that we do not accept any responsibility for any consequences of using this app.</p>
+    <p>Our main purpose is to help you to choose something when you cannot do it by your own but you don't have to use it for illegal purposes. Have fun and thanks!</p>
 </div>
 
 <div class="clearfix"></div>

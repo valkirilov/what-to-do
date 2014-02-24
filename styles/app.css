@@ -9,12 +9,19 @@
     margin: 10px auto;
     text-align: center;
 }
-.add .col-lg-6 {
+.add .col-lg-9 {
     float: none;
     margin: 0px auto;
 }
 .add ul {
     margin: 10px;
+}
+
+.removeBadge {
+    float: right;
+    margin: 2px 5px;
+    
+    cursor: pointer;
 }
 
 #ask-button {
@@ -47,8 +54,8 @@
 }
 
 canvas {
-    width: 450px;
-    height: 450px;
+    width: 450px !important;
+    height: 450px !important;
  
     position: relative;
     margin: 21px auto;
@@ -60,12 +67,58 @@ canvas {
     -o-transition: 5s;
 }
 
-.animation {
-    height: 480px;
+#divAnswer {
+    opacity: 0;
+    display: none;
     
     position: relative;
+    
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+
+.animation {
+    height: 520px;
+    
+    position: relative;
+    vertical-align: top;
 }
 
 .footer {
     text-align: center;
+}
+
+/* Some responsive stuff
+ */
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Phones in portrait */
+@media screen and (max-width: 320px) {
+    
+    .animation {
+        height: 250px;
+    }
+    
+    canvas {
+        margin: 0 auto;
+        position: relative;
+        
+        transform:          translateY(-100px) translateX(-100px) scale(0.3);
+        -webkit-transform:  translateY(-100px) translateX(-100px) scale(0.3);
+        -moz-transform:     translateY(-100px) translateX(-100px) scale(0.3);
+        -ms-transform:      translateY(-100px) translateX(-100px) scale(0.3);
+        -o-transform:       translateY(-100px) translateX(-100px) scale(0.3);
+    }
+    
+    /* Hidden for now because I cant test devices*/
+    .result {
+        display: none;
+    }
+    
+    
+    
+    
 }

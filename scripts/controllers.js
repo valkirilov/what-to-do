@@ -2,24 +2,29 @@
 
 /* Controllers */
 
+// todo
+// removing element
+// fix bug on iOS
+// test on firefox
+
 angular.module('whatToDo.controllers', []).
 controller('HomeController', [function() {
 
 }])
 .controller('AppController', ['$scope', function($scope) {
     
-    
-    
     $scope.data = [];
     $scope.items = [];
     $scope.askButton = false;
     $scope.askResult = false;
-    $scope.divResult = angular.element(document.getElementById('divResult'));
+    $scope.divResult = angular.element(document.getElementById('divResult')); // This is the circle with the numer
+    $scope.divAnswer = angular.element(document.getElementById('divAnswer')); // This is the box with the info
     $scope.rotateInterval = null;
         
     $scope.canvas = null;
     $scope.context = null;
     $scope.chart = null;
+    $scope.canvasSize = null; // Because of the problesm on the iPads
     
     // Colors from http://flatuicolors.com/
     $scope.colors = ['#1abc9c', '#f1c40f', '#2ecc71', '#e67e22', '#3498db', '#e74c3c', '#9b59b6', '#bdc3c7', '#34495e'];
@@ -32,7 +37,8 @@ controller('HomeController', [function() {
     
     $scope.init = function(inputCanvas) {           
         $scope.canvas = document.getElementById(inputCanvas);
-        $scope.context = canvas.getContext("2d");
+        $scope.context = $scope.canvas.getContext("2d");
+        $scope.canvasSize =  { width: $scope.canvas.width, height: $scope.canvas.height };
         
         // Init music
         $scope.musicRotate = new Audio();
@@ -58,6 +64,30 @@ controller('HomeController', [function() {
         return false;
     }
     
+    $scope.removeChoice = function(choice) {    
+        var index = -1;
+        for (var ind in $scope.data) {
+            if ($scope.data[ind].name === choice.name)
+                index = ind;
+        }        
+
+        $scope.data.splice(index, 1);
+        $scope.items.splice(index, 1);
+        
+        $scope.askButton = true;
+    };
+    
+    $scope.removeAll = function() {
+        console.log('Clear');
+        
+        for (var i in $scope.data) {
+            $scope.removeChoice($scope.data[i]);
+        }
+        $scope.data = new Array();
+        $scope.index = new Array();
+    };
+    
+        
     $scope.addChoice = function() {
         
         if ($scope.newChoice === undefined || $scope.newChoice.length === 0)
@@ -71,18 +101,19 @@ controller('HomeController', [function() {
             
             $scope.askButton = true;
             $scope.askResult = false;
+            
+            $scope.changeAnswerDivVisibility();
         }
         else {
             alert('Already added.');
         }
-        
-        
     };
     
     $scope.addChoices = function() {
         
         $scope.items = [];
         
+        $scope.nextColor = 0;
         var size = 100 / $scope.data.length;
         for (var item in $scope.data) {
             $scope.nextColor = ( ++$scope.nextColor == $scope.colors.length) ? 0 : $scope.nextColor;
@@ -90,23 +121,42 @@ controller('HomeController', [function() {
             var newItem = {};
             newItem.value = size;
             newItem.color = $scope.colors[$scope.nextColor];
-            newItem.name = $scope.data[item];
+            newItem.name = $scope.data[item].name;
+            newItem.id = $scope.data[item].id;
             
             $scope.items.push(newItem);
         }
         
-        $scope.chart = new Chart($scope.context).Doughnut($scope.items);
+        $scope.drawChart({animateRotate : false, animateScale : true});
     };
     
-    $scope.randomize = function() {        
-        var degrees = 0;
-        var rotationTimes = $scope.getRandom($scope.items.length) * 5;
-        var counterTimes = 0;
-        var step = $scope.getRandom(360*rotationTimes)+360;
-        var speed = 500;
+    $scope.drawChart = function(options) {
+        $scope.canvas.width = $scope.canvasSize.width;
+        $scope.canvas.height = $scope.canvasSize.height;
+        $scope.chart = new Chart($scope.context).Doughnut($scope.items, options);
+    };
+    
+    $scope.changeAnswerDivVisibility = function(status) {
+        if (status === 1) {
+            $scope.divAnswer.css('opacity', '1');
+            $scope.divAnswer.css('display', 'block');
+        }
+        else {
+            $scope.divAnswer.css('opacity', '0');
+            $scope.divAnswer.css('display', 'none');
+        }
+    };
+    
+    $scope.randomize = function() {
+                
+        // Draw the chart
+        $scope.drawChart();
+        $scope.changeAnswerDivVisibility();
         
-        degrees += step;
-        var rotation = 'rotate(' + degrees + 'deg)';
+        var rotationTimes = $scope.getRandom($scope.items.length) * 5;
+        var step = $scope.getRandom(360*rotationTimes)+720;
+        
+        var rotation = 'rotate(' + step + 'deg)';
         
         $scope.canvas.style.MozTransform = rotation; //For Bankin :)
         $scope.canvas.style.webkitTransform = rotation;
@@ -130,18 +180,25 @@ controller('HomeController', [function() {
             $scope.musicFinish.play();
             clearInterval($scope.rotateInterval);
             
-            // Choose the winner
+            // Choose the winner and display it
             var resultIndex = $scope.getRandom($scope.data.length);
-            $scope.divResult.text(resultIndex+1);
             var resultStyle = $scope.items[resultIndex].color;
+            
+            $scope.divResult.text(resultIndex+1);
             $scope.divResult.css('background-color', resultStyle);
             
+            var resultBadge = angular.element(document.getElementById('resultBadge'));
+            var resultName = angular.element(document.getElementById('resultName'));
+            
+            resultBadge.css('background-color', resultStyle);
+            resultBadge.text($scope.items[resultIndex].id);
+            resultName.text($scope.items[resultIndex].name);
+            
+            $scope.changeAnswerDivVisibility(1);
         }, 5000);
     };
     
-    var newData = ["House M.D", "LOST", "Heroes", "Monk", "Some other choice", ":@:@:@", "House M.D", "LOST", "Heroes", "Monk", "Some other choice", ":@:@:@", "House M.D", "LOST", "Heroes", "Monk", "Some other choice", ":@:@:@"];
     $scope.init('canvas');
-    //$scope.addChoices(newData);
 }])
 .controller('MyCtrl1', [function() {
 
