@@ -152,14 +152,16 @@ controller('HomeController', [function() {
         // Draw the chart
         $scope.drawChart();
         $scope.changeAnswerDivVisibility();
+        $scope.showResultCircle('?', '#333333');
         
         var rotationTimes = $scope.getRandom($scope.items.length) * 5;
         var step = $scope.getRandom(360*rotationTimes)+720;
         
         var rotation = 'rotate(' + step + 'deg)';
         
-        $scope.canvas.style.MozTransform = rotation; //For Bankin :)
+        $scope.canvas.style.MozTransform = rotation;
         $scope.canvas.style.webkitTransform = rotation;
+        $scope.canvas.style.transform = rotation;
         
         $scope.askButton = false;
         $scope.askResult = true;
@@ -183,9 +185,7 @@ controller('HomeController', [function() {
             // Choose the winner and display it
             var resultIndex = $scope.getRandom($scope.data.length);
             var resultStyle = $scope.items[resultIndex].color;
-            
-            $scope.divResult.text(resultIndex+1);
-            $scope.divResult.css('background-color', resultStyle);
+            $scope.showResultCircle(resultIndex+1, resultStyle);
             
             var resultBadge = angular.element(document.getElementById('resultBadge'));
             var resultName = angular.element(document.getElementById('resultName'));
@@ -196,6 +196,11 @@ controller('HomeController', [function() {
             
             $scope.changeAnswerDivVisibility(1);
         }, 5000);
+    };
+    
+    $scope.showResultCircle = function(result, color) {
+        $scope.divResult.text(result);
+        $scope.divResult.css('background-color', color);
     };
     
     $scope.init('canvas');
