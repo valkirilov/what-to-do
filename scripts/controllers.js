@@ -75,6 +75,8 @@ controller('HomeController', [function() {
         $scope.items.splice(index, 1);
         
         $scope.askButton = true;
+        $scope.prepareChoices();
+        $scope.drawChart({animateRotate : false, animateScale : true});
     };
     
     $scope.removeAll = function() {
@@ -97,7 +99,7 @@ controller('HomeController', [function() {
             var newItem = { id:$scope.data.length+1, name:$scope.newChoice };
             $scope.data.push(newItem);
             $scope.newChoice = "";
-            $scope.addChoices();
+            $scope.prepareChoices();
             
             $scope.askButton = true;
             $scope.askResult = false;
@@ -109,7 +111,7 @@ controller('HomeController', [function() {
         }
     };
     
-    $scope.addChoices = function() {
+    $scope.prepareChoices = function() {
         
         $scope.items = [];
         
@@ -148,6 +150,9 @@ controller('HomeController', [function() {
     };
     
     $scope.randomize = function() {
+        
+        if ($scope.data.length == 0)
+            return;
                 
         // Draw the chart
         $scope.drawChart();
@@ -185,7 +190,8 @@ controller('HomeController', [function() {
             // Choose the winner and display it
             var resultIndex = $scope.getRandom($scope.data.length);
             var resultStyle = $scope.items[resultIndex].color;
-            $scope.showResultCircle(resultIndex+1, resultStyle);
+            var resultId = $scope.items[resultIndex].id;
+            $scope.showResultCircle(resultId, resultStyle);
             
             var resultBadge = angular.element(document.getElementById('resultBadge'));
             var resultName = angular.element(document.getElementById('resultName'));
