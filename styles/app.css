@@ -1,4 +1,32 @@
 
+.action {
+    width: 128px;
+    height: 128px;
+    background: url(../images/homepage-actions-small.png);
+
+
+    margin: 0 auto;
+}
+
+.action.movie {
+    background-position: 0 0;
+}
+.action.clothes {
+    background-position: -128px 0;
+}
+.action.cooking {
+    background-position: -256px 0;
+}
+.action.book {
+    background-position: -384px 0;
+}
+.action.vacation {
+    background-position: -512px 0;
+}
+.action.music {
+    background-position: -640px 0;
+}
+
 .view {
     text-align: center;
 }
@@ -97,6 +125,9 @@ canvas {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Phones in portrait */
 @media screen and (max-width: 320px) {
+    .jumbotron p {
+        font-size: 14px;
+    }
     
     .animation {
         height: 250px;
