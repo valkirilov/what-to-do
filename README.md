@@ -7,7 +7,9 @@ This is simple app that helps you to choose what to do from a list with options
 The project is hosted and you can try it or see it's demo [here](http://valkirilov.github.io/what-to-do)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/valkirilov/what-to-do/gh-pages/images/cover.png" alt="Screenshot"/>
+  <a href="http://valkirilov.github.io/what-to-do" target="_blank">
+    <img src="https://raw.githubusercontent.com/valkirilov/what-to-do/gh-pages/images/cover.png" alt="Screenshot"/>
+  </a>
 </p>
 
 ### About What-to-do? App
