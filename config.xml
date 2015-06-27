@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "what-to-do.io.github.valkirilov"
+        versionCode = "10" 
+        version     = "1.0.0" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>What-to-do App</name>
+
+    <description>
+        This is simple app that helps you to choose what to do from a list with options
+    </description>
+
+    <author href="https://valkirilov.github.io" email="val.kirilov@gmail.com">
+        Valentin Kirilov
+    </author>
+
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+    <gap:platform name="winphone" />
+
+    <icon src="icon.png" />
+    <gap:splash src="splash.png" />
+
+</widget>
