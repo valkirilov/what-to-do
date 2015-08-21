@@ -64,8 +64,11 @@
     
     border-radius: 100%;
     
-    position: relative;
-    margin: -325px auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -75px;
+    margin-left: -75px;
     z-index: 6;
     
     transition: 0.5s;
@@ -82,8 +85,8 @@
 }
 
 canvas {
-    width: 450px !important;
-    height: 450px !important;
+    width: 450px;
+    height: 450px;
  
     position: relative;
     margin: 21px auto;
@@ -93,6 +96,19 @@ canvas {
     -moz-transition: 5s;
     -ms-transition: 5s;
     -o-transition: 5s;
+
+    transition-timing-function: ease-out;
+    -webkit-transition-timing-function: ease-out;
+    -mox-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+}
+canvas.disable-animation {
+    transition: 0s;
+    -webkit-transition: 0s;
+    -moz-transition: 0s;
+    -ms-transition: 0s;
+    -o-transition: 0s;
 }
 
 #divAnswer {
@@ -108,11 +124,15 @@ canvas {
     -o-transition: 0.5s;
 }
 
-.animation {
-    height: 520px;
-    
+#button-ask {
+    position: relative;
+    z-index: 100;
+}
+
+.animation {    
     position: relative;
     vertical-align: top;
+    margin-bottom: 20px;
 }
 
 .footer {
@@ -122,34 +142,45 @@ canvas {
 /* Some responsive stuff
  */
 
+@media screen and (max-width: 480px) {
+    
+    canvas {
+        width: 280px;
+        height: 280px;
+        margin: 10px auto;
+        position: relative;
+    }
+    
+    .result {
+        width: 100px;
+        height: 100px;
+        margin-top: -51px;
+        margin-left: -49px;
+        line-height: 100px;
+    }
+    
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Phones in portrait */
 @media screen and (max-width: 320px) {
     .jumbotron p {
         font-size: 14px;
     }
-    
-    .animation {
-        height: 250px;
-    }
-    
+
     canvas {
-        margin: 0 auto;
-        position: relative;
-        
-        transform:          translateY(-100px) translateX(-100px) scale(0.3);
-        -webkit-transform:  translateY(-100px) translateX(-100px) scale(0.3);
-        -moz-transform:     translateY(-100px) translateX(-100px) scale(0.3);
-        -ms-transform:      translateY(-100px) translateX(-100px) scale(0.3);
-        -o-transform:       translateY(-100px) translateX(-100px) scale(0.3);
+        width: 200px;
+        height: 200px;
+        margin: 20px auto;
     }
     
-    /* Hidden for now because I cant test devices*/
+    
     .result {
-        display: none;
+        width: 80px;
+        height: 80px;
+        margin-top: -43px;
+        margin-left: -39px;
+        line-height: 80px;
     }
-    
-    
-    
     
 }

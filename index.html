@@ -1,74 +1,73 @@
 <!doctype html>
 <html lang="en" ng-app="whatToDo">
 <head>
-    <meta charset="utf-8">
-    <title>What-to-do? App - Answers for every question</title>
-    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+  <meta charset="utf-8">
+  <title>What-to-do? App - Answers for every question</title>
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <meta name="author" content="Valentin Kirilov">
-    <meta name="keywords" content="what-to-do, answers, question, random, valkirilov, what to do, valentin, kirilov, rendom, generator">
-    <meta name="description" content="Sometimes you have a lot of things on your mind and you cannot choose only one to do. We can help you..
-                                    You can ask us for help about everything, just type the options and we will choose the right choice for you problem.">
-    
-    <meta property="og:image" content="http://valkirilov.github.io/what-to-do/images/cover.png" />
-    <link rel="apple-touch-icon-precomposed" href="images/favicon.png">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    
-    <link rel="stylesheet" href="libs/bootstrap-3.1.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="libs/bootstrap-3.1.1/css/bootstrap-theme.min.css" />
-    
-    <link rel="stylesheet" href="styles/app.css"/>
-    <link rel="stylesheet" href="styles/jumbotron-narrow.css"/>
-    
-    <script type="text/javascript" src="libs/chart-js/Chart.min.js"></script>
-    
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <meta name="author" content="Valentin Kirilov">
+  <meta name="keywords" content="what-to-do, answers, question, random, valkirilov, what to do, valentin, kirilov,  generator">
+  <meta name="description" content="Sometimes you have a lot of things on your mind and you cannot choose only one to do. We can help you.. You can ask us for help about everything, just type the options and we will choose the right choice for you problem.">
+  
+  <meta property="og:image" content="http://valkirilov.github.io/what-to-do/images/cover.png" />
+  <link rel="apple-touch-icon-precomposed" href="images/favicon.png">
+  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
+  
+  <link rel="stylesheet" href="styles/app.css"/>
+  <link rel="stylesheet" href="styles/jumbotron-narrow.css"/>
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
-<body>
+<body ng-controller="GlobalController">
     
-    <div class="container">
-        <div class="header">
-            <ul class="nav nav-pills pull-right">
-                <li><a href="#/home">Home</a></li>
-                <li class="active"><a href="#/app">The App</a></li>
-                <li><a href="#/contact">Contact</a></li>
-            </ul>
-            <h3 class="text-muted">What-to-do? App</h3>
-        </div>
-    
-        <div class="view" ng-view></div>
-    
-        <div class="footer">
-            <p>&copy; What-to-do? App 2014, Some rights reserved</p>
-            <p>We recommend to use Chrome for better experience</p>
-        </div>
+  <div class="container">
+    <div class="header">
+      <h3 class="text-muted pull-left">What-to-do? App</h3>
+      <ul class="nav nav-pills pull-right">
+        <li class="{{ $state.current.name === 'app' ? 'active' : '' }}"><a ui-sref="{{ 'app' }}">The App</a></li>
+        <li class="{{ $state.current.name === 'contacts' ? 'active' : '' }}"><a ui-sref="{{ 'contacts' }}">Contacts</a></li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
 
-    </div> <!-- /container -->
+    <div class="clearfix"></div>
 
+    <div class="view" ui-view></div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    
-    <!-- In production use:
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
-    -->
-    
-    <script src="libs/angular/angular.min.js"></script>
-    <script src="libs/angular/angular-route.min.js"></script>
-    <script src="scripts/app.js"></script>
-    <script src="scripts/services.js"></script>
-    <script src="scripts/controllers.js"></script>
-    <script src="scripts/filters.js"></script>
-    <script src="scripts/directives.js"></script>
+    <div class="footer">
+      <p>&copy; What-to-do? App {{ app.year }}, version {{ app.version}}, Some rights reserved</p>
+      <p>We recommend to use Chrome for better experience</p>
+    </div>
+
+  </div> <!-- /container -->
+
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  
+  <script type="text/javascript" src="bower_components/firebase/firebase.js"></script>
+
+  <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="bower_components/angularfire/dist/angularfire.min.js"></script>
+  <script type="text/javascript" src="bower_components/Chart.js/Chart.min.js"></script>
+
+  <!-- Should be minified -->
+  <script type="text/javascript" src="scripts/app.js"></script>
+  <script type="text/javascript" src="scripts/services.js"></script>
+  <script type="text/javascript" src="scripts/controllers.js"></script>
+  <script type="text/javascript" src="scripts/filters.js"></script>
+  <script type="text/javascript" src="scripts/directives.js"></script>
 </body>
 </html>

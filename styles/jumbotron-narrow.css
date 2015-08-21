@@ -15,6 +15,7 @@ body {
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 30px;
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
@@ -76,4 +77,28 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+/* Mobile devices */
+@media screen and (max-width: 450px) {
+  
+  .header {
+    margin-bottom: 10px;
+  }
+
+  .header h3 {
+    margin: 0px auto 0 auto;
+    clear: both;
+    float: none !important;
+    text-align: center;
+  }
+
+  .header ul {
+    width: 172px;
+    margin: -15px auto 10px auto;
+    clear: both;
+    float: none !important;
+    text-align: center;
+  }
+  
 }

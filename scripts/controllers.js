@@ -7,18 +7,38 @@
 // fix bug on iOS
 // test on firefox
 
-angular.module('whatToDo.controllers', []).
-controller('HomeController', [function() {
+angular.module('whatToDo.controllers', [])
+.controller('GlobalController', ['$rootScope', '$scope', '$firebaseObject', '$firebaseArray', function($rootScope, $scope, $firebaseObject, $firebaseArray) {
+    var currentDate = new Date();
+    $rootScope.app = {
+        year: currentDate.getFullYear(),
+        version: '2.0.1'
+    };
 
+    $rootScope.firebaseRef;
+    $rootScope.firebaseQuestions;
+
+    $scope.init = function() {
+        // Make the Firebase connection
+        $rootScope.firebaseRef = new Firebase("https://what-to-do-app.firebaseio.com/questions/");
+
+        $rootScope.firebaseQuestions = $firebaseArray($rootScope.firebaseRef);
+    };
+
+    $rootScope.saveQuestionToDB = function(question) {
+        $rootScope.firebaseQuestions.$add(question);
+    };
+
+    $scope.init();
 }])
-.controller('AppController', ['$scope', function($scope) {
+.controller('AppController', ['$rootScope', '$scope', '$timeout', '$interval', function($rootScope, $scope, $timeout, $interval) {
     
     $scope.data = [];
     $scope.items = [];
     $scope.askButton = false;
     $scope.askResult = false;
-    $scope.divResult = angular.element(document.getElementById('divResult')); // This is the circle with the numer
-    $scope.divAnswer = angular.element(document.getElementById('divAnswer')); // This is the box with the info
+    $scope.divResult = angular.element('#divResult'); // This is the circle with the numer
+    $scope.divAnswer = angular.element('#divAnswer'); // This is the box with the info
     $scope.rotateInterval = null;
         
     $scope.canvas = null;
@@ -27,7 +47,17 @@ controller('HomeController', [function() {
     $scope.canvasSize = null; // Because of the problesm on the iPads
     
     // Colors from http://flatuicolors.com/
-    $scope.colors = ['#1abc9c', '#f1c40f', '#2ecc71', '#e67e22', '#3498db', '#e74c3c', '#9b59b6', '#bdc3c7', '#34495e'];
+    var colorPalletes = [
+        ['#1abc9c', '#f1c40f', '#2ecc71', '#e67e22', '#3498db', '#e74c3c', '#9b59b6', '#bdc3c7', '#34495e'], // http://flatuicolors.com/
+        ['#897FBA', '#2CC990', '#EEE657', '#00B5B5', '#FCB941', '#8870FF', '#FC6042', '#7E3661', '#E01931', '#2C82C9', '#BB3658', '#7BB0A6', '#D98B3A', '#42729B'], // http://flatcolors.net/
+        ['#ED5565', '#FC6E51', '#FFCE54', '#A0D468', '#4FC1E9', '#5D9CEC', '#AC92EC', '#EC87C0', '#656D78', '#DA4453', '#E9573F', '#F6BB42', '#8CC152', '#4A89DC', '#967ADC', '#D770AD'], // http://tintui.com/flattastic.html
+        ['#001F3F', '#0074D9', '#7FDBFF', '#39CCCC', '#3D9970', '#2ECC40', '#01FF70', '#FFDC00', '#FF851B', '#FF4136', '#85144B', '#F012BE', '#B10DC9'], // http://tintui.com/clrs.html
+
+        ['#39D5FF', '#29C5FF', '#19B5FE', '#22A7F0', '#1297E0', '#0287D0', '#0077C0', '#0067B0', '#0057A0', '#004790', '#003780', '#102770'], // http://www.flatcolorsui.com/
+        ['#8EFFC1', '#5EFCA1', '#4EEC91', '#3EDC81', '#2ECC71', '#1EBC61', '#1EBC61', '#009C41', '#008C31', '#007C21', '#006C11', '#005C01'], // http://www.flatcolorsui.com/
+        ['#FDE3A7', '#FFCF4B', '#F9BF3B', '#F9B32F', '#F5AB35', '#F39C12', '#F1892D', '#E67E22', '#D87400', '#C86400', '#B85400', '#A84410'], // http://www.flatcolorsui.com/
+    ];
+    $scope.colors = [];
     $scope.nextColor = 0;
     
     $scope.musicRotate = null;
@@ -36,8 +66,8 @@ controller('HomeController', [function() {
     $scope.soundFinish = "./sounds/end.wav";
     
     $scope.init = function(inputCanvas) {           
-        $scope.canvas = document.getElementById(inputCanvas);
-        $scope.context = $scope.canvas.getContext("2d");
+        $scope.canvas = angular.element(inputCanvas);
+        $scope.context = $scope.canvas.get(0).getContext("2d");
         $scope.canvasSize =  { width: $scope.canvas.width, height: $scope.canvas.height };
         
         // Init music
@@ -51,10 +81,33 @@ controller('HomeController', [function() {
         $scope.musicFinish.setAttribute('src', $scope.soundFinish);
         $scope.musicRotate.load();
         $scope.musicFinish.load();
+
+        // Get color pallete
+        var pallete = $scope.getRandom(colorPalletes.length);
+        $scope.colors = $scope.shuffleArray(colorPalletes[pallete]);
     };
     
     $scope.getRandom = function(max) {
         return Math.floor(Math.random() * max);
+    };
+
+    $scope.shuffleArray = function (array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
     };
     
     $scope.contains = function(array, item) {
@@ -62,7 +115,7 @@ controller('HomeController', [function() {
             if (array[i] === item)
                 return true;
         return false;
-    }
+    };
     
     $scope.removeChoice = function(choice) {    
         var index = -1;
@@ -79,16 +132,13 @@ controller('HomeController', [function() {
         $scope.drawChart({animateRotate : false, animateScale : true});
     };
     
-    $scope.removeAll = function() {
-        console.log('Clear');
-        
+    $scope.removeAll = function() {        
         for (var i in $scope.data) {
             $scope.removeChoice($scope.data[i]);
         }
-        $scope.data = new Array();
-        $scope.index = new Array();
+        $scope.data = [];
+        $scope.index = [];
     };
-    
         
     $scope.addChoice = function() {
         
@@ -105,9 +155,6 @@ controller('HomeController', [function() {
             $scope.askResult = false;
             
             $scope.changeAnswerDivVisibility();
-        }
-        else {
-            alert('Already added.');
         }
     };
     
@@ -135,6 +182,8 @@ controller('HomeController', [function() {
     $scope.drawChart = function(options) {
         $scope.canvas.width = $scope.canvasSize.width;
         $scope.canvas.height = $scope.canvasSize.height;
+
+        options.showTooltips = false;
         $scope.chart = new Chart($scope.context).Doughnut($scope.items, options);
     };
     
@@ -151,22 +200,26 @@ controller('HomeController', [function() {
     
     $scope.randomize = function() {
         
-        if ($scope.data.length == 0)
+        if ($scope.data.length === 0)
             return;
                 
         // Draw the chart
-        $scope.drawChart();
+        $scope.drawChart({animateRotate : false, animateScale : false});
         $scope.changeAnswerDivVisibility();
         $scope.showResultCircle('?', '#333333');
         
-        var rotationTimes = $scope.getRandom($scope.items.length) * 5;
-        var step = $scope.getRandom(360*rotationTimes)+720;
+        var rotationTimes = $scope.items.length * 3; // We want cool rotations
+        var step = $scope.getRandom(360*rotationTimes);
         
         var rotation = 'rotate(' + step + 'deg)';
         
-        $scope.canvas.style.MozTransform = rotation;
-        $scope.canvas.style.webkitTransform = rotation;
-        $scope.canvas.style.transform = rotation;
+        // Reset the canvas
+        $scope.canvas.addClass('disable-animation');
+        $scope.setRotation('rotate(0deg)');
+
+        // Apply the new rotation
+        $scope.canvas.removeClass('disable-animation');
+        $scope.setRotation(rotation);
         
         $scope.askButton = false;
         $scope.askResult = true;
@@ -175,7 +228,7 @@ controller('HomeController', [function() {
         $scope.musicRotate.play();
         
         var colorIndex = 0;
-        $scope.rotateInterval = setInterval(function() {
+        $scope.rotateInterval = $interval(function() {
             colorIndex = (colorIndex >= $scope.items.length) ? 0 : colorIndex;
             
             var resultStyle = $scope.items[colorIndex].color;
@@ -183,9 +236,9 @@ controller('HomeController', [function() {
             colorIndex++;
         }, 500);
         
-        setTimeout(function() {
+        $timeout(function() {
             $scope.musicFinish.play();
-            clearInterval($scope.rotateInterval);
+            $interval.cancel($scope.rotateInterval);
             
             // Choose the winner and display it
             var resultIndex = $scope.getRandom($scope.data.length);
@@ -193,23 +246,54 @@ controller('HomeController', [function() {
             var resultId = $scope.items[resultIndex].id;
             $scope.showResultCircle(resultId, resultStyle);
             
-            var resultBadge = angular.element(document.getElementById('resultBadge'));
-            var resultName = angular.element(document.getElementById('resultName'));
+            var resultBadge = angular.element('#resultBadge');
+            var resultName = angular.element('#resultName');
             
             resultBadge.css('background-color', resultStyle);
             resultBadge.text($scope.items[resultIndex].id);
             resultName.text($scope.items[resultIndex].name);
             
             $scope.changeAnswerDivVisibility(1);
+
+            // Add the result to the DB
+            var currentDate = new Date();
+            var question = {
+                text: $scope.question,
+                options: $scope.items,
+                answer: {
+                    badge: resultBadge.text(),
+                    name: resultName.text(),
+                },
+                date: currentDate.toString()
+            };
+            $rootScope.saveQuestionToDB(question);
         }, 5000);
     };
-    
+
+    $scope.setRotation = function(rotation) {
+        $scope.canvas.get(0).style.MozTransform = rotation;
+        $scope.canvas.get(0).style.webkitTransform = rotation;
+        $scope.canvas.get(0).style.transform = rotation;
+    };
+
+    $scope.buttonAsk = function() {
+        angular.element('#container-marketing').slideUp(function() {
+            var containerApp = angular.element('#container-app');
+
+            angular.element('html,body').animate({
+                scrollTop: containerApp.offset().top - 210
+            }, 500);
+
+            containerApp.find('input:first').focus();
+        });
+    };
+
     $scope.showResultCircle = function(result, color) {
         $scope.divResult.text(result);
         $scope.divResult.css('background-color', color);
     };
     
-    $scope.init('canvas');
+    $scope.init('#canvas');
 }])
 .controller('MyCtrl1', [function() {
 

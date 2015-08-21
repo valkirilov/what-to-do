@@ -1,5 +1,7 @@
 
-<div class="row add">
+<div ng-include="'partials/home.html'"></div>
+
+<div id="container-app" class="row add">
     <div class="col-lg-9">
 
         <div class="panel panel-default">
@@ -8,7 +10,10 @@
             </div>
             <div class="panel-body">
                 <div class="input-group">
-                    <span class="input-group-addon">What to do?</span>
+                    <span class="input-group-addon">
+                        <span class="hidden-xs">What to do?</span>
+                        <span class="visible-xs">?</span>
+                    </span>
                     <input type="text" class="form-control" ng-model="question" placeholder="What do you want to ask?">
                 </div>
                 <br />
@@ -42,22 +47,24 @@
             <div class="panel-body text-left">
                 <p><strong>Our answer:</strong> <span id="resultBadge" class="badge"></span> <span id="resultName"></span></p>
                 <br />
-                <p>We hope you are satisfied with the response and you will ask us for help again. Good Luck!</p>
+                <p>We hope that you are satisfied with the response and you will ask us for help again. Good Luck!</p>
             </div>
         </div>
         
-        <input type="button" class="btn btn-primary" ng-show="askButton" ng-click="randomize()" value="Ask me" />
+        <input type="button" id="button-ask" class="btn btn-primary btn-lg" ng-show="askButton" ng-click="randomize()" value="Ask me" />
         
 
     </div><!-- /.col-lg-6 -->
     
 </div><!-- /.row -->
 
-<div class="animation">                                                                 
+<div class="row animation">                                                                 
     <canvas id="canvas" height="450" width="450"></canvas>
-    <!--<input type="button" id="ask-button" class="btn btn-primary btn-lg"  ng-click="randomize()" value="Ask me" />-->
     <div id="divResult" class="result" ng-show="askResult">?</div>
+    <div class="clearfix"></div>
 </div>
+
+<div class="clearfix"></div>
 
 <div class="alert alert-warning text-left">
     <p><strong>Warning!</strong></p>
