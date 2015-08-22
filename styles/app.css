@@ -192,9 +192,10 @@ canvas.disable-animation {
     }
 
     .btn-group-feedback {
-        width: 100px;
+        width: 130px;
         margin: 21px auto 10px auto;
         display: block;
+        text-align: center;
     }
     
 }
