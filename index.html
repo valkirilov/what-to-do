@@ -12,13 +12,35 @@
   <meta name="keywords" content="what-to-do, answers, question, random, valkirilov, what to do, valentin, kirilov,  generator">
   <meta name="description" content="Sometimes you have a lot of things on your mind and you cannot choose only one to do. We can help you.. You can ask us for help about everything, just type the options and we will choose the right choice for you problem.">
   
+  <meta property="og:url"           content="http://valkirilov.github.io/what-to-do/" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="What-to-do? App - Answers for every question" />
+  <meta property="og:description"   content="Sometimes you have a lot of things on your mind and you cannot choose only one to do. We can help you.. You can ask us for help about everything, just type the options and we will choose the right choice for you problem." />
   <meta property="og:image" content="http://valkirilov.github.io/what-to-do/images/cover.png" />
-  <link rel="apple-touch-icon-precomposed" href="images/favicon.png">
-  <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png?v=Gvvmonmvzv">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png?v=Gvvmonmvzv">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png?v=Gvvmonmvzv">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png?v=Gvvmonmvzv">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png?v=Gvvmonmvzv">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png?v=Gvvmonmvzv">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png?v=Gvvmonmvzv">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png?v=Gvvmonmvzv">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png?v=Gvvmonmvzv">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png?v=Gvvmonmvzv" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png?v=Gvvmonmvzv" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png?v=Gvvmonmvzv" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png?v=Gvvmonmvzv" sizes="16x16">
+  <link rel="manifest" href="/images/favicons/manifest.json?v=Gvvmonmvzv">
+  <link rel="shortcut icon" href="/images/favicons/favicon.ico?v=Gvvmonmvzv">
+  <meta name="apple-mobile-web-app-title" content="What to do?">
+  <meta name="application-name" content="What to do?">
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png?v=Gvvmonmvzv">
+  <meta name="theme-color" content="#ffffff">
   
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />
+  <!-- <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" /> -->
   
   <link rel="stylesheet" href="styles/app.css"/>
   <link rel="stylesheet" href="styles/jumbotron-narrow.css"/>
@@ -45,6 +67,107 @@
     <div class="clearfix"></div>
 
     <div class="view" ui-view></div>
+      
+    <div ng-controller="AppController">
+      <div id="container-app" class="row add">
+          <div class="col-lg-9">
+
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <h3 class="panel-title">Here is what we need to help you</h3>
+                  </div>
+                  <div class="panel-body">
+                      <div class="input-group">
+                          <span class="input-group-addon">
+                              <span class="hidden-xs">What to do?</span>
+                              <span class="visible-xs">?</span>
+                          </span>
+                          <input type="text" class="form-control" ng-model="question" placeholder="What do you want to ask?" ng-enter="goToChoice()">
+                      </div>
+                      <br />
+                      <div class="input-group">
+                          <input type="text" id="form-input-choice" class="form-control" placeholder="Add some choices..." ng-model="newChoice" ng-enter="addChoice()" />
+                          <span class="input-group-btn">
+                              
+                              <button class="btn btn-success" type="button" ng-click="addChoice()">Add</button>
+                              <!--<input type="button" class="btn btn-danger" value="Clear all" />-->
+                          </span>
+                      </div><!-- /input-group -->
+                      
+                      <ul class="list-group">
+                          <li class="list-group-item text-left" ng-repeat="choice in items">
+                              
+                              <span class="label label-danger removeBadge" ng-click="removeChoice(choice)">x</span>
+                              <span class="badge" style="background-color: {{ choice.color }}"> {{ choice.id }} </span>
+                              {{ choice.name }}
+                          </li>
+                      </ul>
+                      
+                  </div>
+                  
+              </div>
+              
+              <br />
+              <div id="divAnswer" class="panel panel-default">
+                  <div class="panel-heading">
+                      <h3 class="panel-title"><strong>Question:</strong> {{ question }}</h3>
+                  </div>
+                  <div class="panel-body text-left">
+                      <h3>Our answer:</h3>
+                      <h4>
+                          <span id="resultBadge" class="badge"></span> 
+                          <span id="resultName"></span>
+
+                          <div class="clearfix-xs"></div>
+                          <div class="btn-group btn-group-feedback" role="group" ng-hide="questionObject.isLiked >= 0" aria-label="...">
+                            <button type="button" class="btn btn-success btn-xs" ng-click="voteQuestion(1)"> &nbsp; Lite it &nbsp; </button>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="voteQuestion(0)"> &nbsp; Dislike! &nbsp; </button>
+                          </div>
+                          <span class="btn-group-feedback" ng-show="questionObject.isLiked >= 0">Thanks for the feedback!</span>
+                      </h3>
+                      <br />
+
+                      <h4>Share it to your friends</h4>
+                      <div class="fb-share-button" data-href="//valkirilov.github.io/what-to-do/" data-layout="button"></div>
+
+                      <a href="https://twitter.com/share" class="twitter-share-button" data-text="What-to-do App? helps me with my everyday decisions. Check it out:" data-hashtags="what-to-do app" data-count="none">Tweet</a>
+
+                      <div class="g-plus" data-action="share" data-annotation="none"></div>
+
+                      <br /><br />
+
+                      <p>We hope that you are satisfied with the response and you will ask us for help again. Good Luck!</p>
+
+                      <br />
+                      <button class="btn btn-default btn-lg center-block" ng-click="newQuestion()">Ask new question</button>
+                      <br />
+                  </div>
+              </div>
+              
+              <input type="button" id="button-ask" class="btn btn-primary btn-lg" ng-show="askButton" ng-click="randomize()" value="Ask me" />
+              
+
+          </div><!-- /.col-lg-6 -->
+          
+      </div><!-- /.row -->
+
+      <div class="row animation text-center">                                                                 
+          <canvas id="canvas" height="450" width="450"></canvas>
+          <div id="divResult" class="result {{ items.length === 0 ? 'animation-infinite pulse' : '' }}" ng-show="askResult || items.length === 0">?</div>
+          <div class="clearfix"></div>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <div class="alert alert-warning text-left">
+          <p><strong>Warning!</strong></p>
+          <p>You have to know that we do not accept any responsibility for any consequences of using this app.</p>
+          <p>Our main purpose is to help you to choose something when you cannot do it by your own but you don't have to use it for illegal purposes. Have fun and thanks!</p>
+      </div>
+
+      <div class="clearfix"></div>
+
+    </div>
 
     <div class="footer">
       <p>&copy; What-to-do? App {{ app.year }}, version {{ app.version}}, Some rights reserved</p>
@@ -69,5 +192,36 @@
   <script type="text/javascript" src="scripts/controllers.js"></script>
   <script type="text/javascript" src="scripts/filters.js"></script>
   <script type="text/javascript" src="scripts/directives.js"></script>
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+  <script>window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+   
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+   
+    return t;
+  }(document, "script", "twitter-wjs"));</script>
+
+  <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+  <script src="https://apis.google.com/js/platform.js" async defer>
+  </script>
+
 </body>
 </html>

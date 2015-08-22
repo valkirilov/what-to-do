@@ -18,6 +18,14 @@ angular.module('whatToDo.controllers', [])
     $rootScope.firebaseRef;
     $rootScope.firebaseQuestions;
 
+    $rootScope.questionObject = {
+        text: '',
+        options: [],
+        answer: null,
+        date: null,
+        isLiked: -1
+    };
+
     $scope.init = function() {
         // Make the Firebase connection
         $rootScope.firebaseRef = new Firebase("https://what-to-do-app.firebaseio.com/questions/");
@@ -25,14 +33,39 @@ angular.module('whatToDo.controllers', [])
         $rootScope.firebaseQuestions = $firebaseArray($rootScope.firebaseRef);
     };
 
-    $rootScope.saveQuestionToDB = function(question) {
-        $rootScope.firebaseQuestions.$add(question);
+    $rootScope.addQuestionToDB = function(question) {
+        question.text = question.text || "";
+
+        $rootScope.firebaseQuestions.$add(question).then(function(ref) {
+            $rootScope.questionObject.key = ref.key();
+        });
     };
+
+    $rootScope.saveQuestionToDB = function(question) {
+        var questionDB = $rootScope.firebaseQuestions.$getRecord(question.key);
+
+        questionDB.isLiked = question.isLiked;
+
+        $rootScope.firebaseQuestions.$save(questionDB);
+    };
+
+    $rootScope.buttonAsk = function() {
+        angular.element('#container-marketing').slideUp(function() {
+            var containerApp = angular.element('#container-app');
+
+            angular.element('html,body').animate({
+                scrollTop: containerApp.offset().top - 160
+            }, 500);
+
+            containerApp.find('input:first').focus();
+        });
+    };
+
 
     $scope.init();
 }])
 .controller('AppController', ['$rootScope', '$scope', '$timeout', '$interval', function($rootScope, $scope, $timeout, $interval) {
-    
+
     $scope.data = [];
     $scope.items = [];
     $scope.askButton = false;
@@ -82,11 +115,14 @@ angular.module('whatToDo.controllers', [])
         $scope.musicRotate.load();
         $scope.musicFinish.load();
 
-        // Get color pallete
+        $scope.getCollorPalette();
+    };
+    
+    $scope.getCollorPalette = function() {
         var pallete = $scope.getRandom(colorPalletes.length);
         $scope.colors = $scope.shuffleArray(colorPalletes[pallete]);
     };
-    
+
     $scope.getRandom = function(max) {
         return Math.floor(Math.random() * max);
     };
@@ -156,6 +192,10 @@ angular.module('whatToDo.controllers', [])
             
             $scope.changeAnswerDivVisibility();
         }
+    };
+
+    $scope.goToChoice = function() {
+        angular.element('#form-input-choice').focus();
     };
     
     $scope.prepareChoices = function() {
@@ -245,6 +285,9 @@ angular.module('whatToDo.controllers', [])
             var resultStyle = $scope.items[resultIndex].color;
             var resultId = $scope.items[resultIndex].id;
             $scope.showResultCircle(resultId, resultStyle);
+
+            $scope.divResult.addClass('animation-once');
+            $scope.divResult.addClass('bounceIn');
             
             var resultBadge = angular.element('#resultBadge');
             var resultName = angular.element('#resultName');
@@ -257,35 +300,57 @@ angular.module('whatToDo.controllers', [])
 
             // Add the result to the DB
             var currentDate = new Date();
-            var question = {
+            $rootScope.questionObject = {
                 text: $scope.question,
                 options: $scope.items,
                 answer: {
                     badge: resultBadge.text(),
                     name: resultName.text(),
                 },
-                date: currentDate.toString()
+                date: currentDate.toString(),
+                isLiked: -1
             };
-            $rootScope.saveQuestionToDB(question);
+            $rootScope.addQuestionToDB($rootScope.questionObject);
         }, 5000);
+    };
+
+    $scope.newQuestion = function() {
+        $scope.data = [];
+        $scope.items = [];
+        $scope.askButton = false;
+        $scope.askResult = false;
+        $scope.question = '';
+
+        $rootScope.questionObject = {
+            text: '',
+            options: [],
+            answer: null,
+            date: null,
+            isLiked: -1
+        };
+
+        $scope.getCollorPalette();
+
+        $scope.divResult.removeClass('animation-once');
+        $scope.divResult.removeClass('bounceIn');
+
+        $scope.changeAnswerDivVisibility(0);
+        $scope.drawChart({});
+        $scope.showResultCircle('?', '#333333');
+
+        $rootScope.buttonAsk();
+    };
+
+    $scope.voteQuestion = function(vote) {
+        $rootScope.questionObject.isLiked = vote;
+
+        $rootScope.saveQuestionToDB($rootScope.questionObject);
     };
 
     $scope.setRotation = function(rotation) {
         $scope.canvas.get(0).style.MozTransform = rotation;
         $scope.canvas.get(0).style.webkitTransform = rotation;
         $scope.canvas.get(0).style.transform = rotation;
-    };
-
-    $scope.buttonAsk = function() {
-        angular.element('#container-marketing').slideUp(function() {
-            var containerApp = angular.element('#container-app');
-
-            angular.element('html,body').animate({
-                scrollTop: containerApp.offset().top - 210
-            }, 500);
-
-            containerApp.find('input:first').focus();
-        });
     };
 
     $scope.showResultCircle = function(result, color) {

@@ -1,7 +1,5 @@
 
-<div ng-include="'partials/home.html'"></div>
-
-<div id="container-app" class="row add">
+<div id="container-app" class="row add" ng-controller="AppController">
     <div class="col-lg-9">
 
         <div class="panel panel-default">
@@ -14,11 +12,11 @@
                         <span class="hidden-xs">What to do?</span>
                         <span class="visible-xs">?</span>
                     </span>
-                    <input type="text" class="form-control" ng-model="question" placeholder="What do you want to ask?">
+                    <input type="text" class="form-control" ng-model="question" placeholder="What do you want to ask?" ng-enter="goToChoice()">
                 </div>
                 <br />
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Add some choices..." ng-model="newChoice" ng-enter="addChoice()" />
+                    <input type="text" id="form-input-choice" class="form-control" placeholder="Add some choices..." ng-model="newChoice" ng-enter="addChoice()" />
                     <span class="input-group-btn">
                         
                         <button class="btn btn-success" type="button" ng-click="addChoice()">Add</button>
@@ -45,8 +43,34 @@
                 <h3 class="panel-title"><strong>Question:</strong> {{ question }}</h3>
             </div>
             <div class="panel-body text-left">
-                <p><strong>Our answer:</strong> <span id="resultBadge" class="badge"></span> <span id="resultName"></span></p>
+                <h3>Our answer:</h3>
+                <h4>
+                    <span id="resultBadge" class="badge"></span> 
+                    <span id="resultName"></span>
+
+                    <div class="clearfix-xs"></div>
+                    <div class="btn-group btn-group-feedback" role="group" aria-label="...">
+                      <button type="button" class="btn btn-success btn-xs">Lite it</button>
+                      <button type="button" class="btn btn-danger btn-xs">Dislike!</button>
+                    </div>
+                </h3>
                 <br />
+
+                <h4>Share it to your friends</h4>
+                <div class="fb-share-button" data-href="//valkirilov.github.io/what-to-do/" data-layout="button"></div>
+
+                <a class="twitter-share-button" 
+                    href="https://twitter.com/intent/tweet?text=Hello%20world"
+                    data-count="none"
+                    >Tweet</a>
+
+                <!-- <div class="g-plus" data-action="share" data-annotation="none"></div>
+                <div class="g-plus" data-action="share"></div> -->
+                <div class="g-plus" data-action="share" data-annotation="none"></div>
+                <script type="text/javascript">gapi.plus.go();</script>
+
+                <br /><br />
+
                 <p>We hope that you are satisfied with the response and you will ask us for help again. Good Luck!</p>
             </div>
         </div>

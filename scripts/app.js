@@ -53,8 +53,7 @@ angular.module('whatToDo', [
         .state("app", {
 
           url: "/",
-          templateUrl: './partials/app.html',
-          controller: 'AppController'
+          templateUrl: './partials/home.html',
         })
         .state("contacts", {
 
