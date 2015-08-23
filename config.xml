@@ -21,7 +21,7 @@
     <gap:platform name="android" />
     <gap:platform name="winphone" />
 
-    <icon src="icon.png" />
+    <icon src="favicon-96x96" />
     <gap:splash src="splash.png" />
 
 </widget>
