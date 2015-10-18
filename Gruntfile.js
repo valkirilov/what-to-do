@@ -33,6 +33,7 @@ module.exports = function(grunt) {
             'app/bower_components/angular/angular.min.js', 
             'app/bower_components/angular-ui-router/release/angular-ui-router.min.js',
             'app/bower_components/angularfire/dist/angularfire.min.js',
+            'app/bower_components/moment/min/moment.min.js',
             'app/bower_components/Chart.js/Chart.min.js',
             'app/bower_components/clipboard/dist/clipboard.min.js',
           ],
@@ -63,9 +64,9 @@ module.exports = function(grunt) {
       dev: {
         options: {
           match: [
-            'app/dist/styles.min.css',
-            'app/dist/libs.min.js',
-            'app/dist/scripts.min.js',
+            'dist/styles.min.css',
+            'dist/libs.min.js',
+            'dist/scripts.min.js',
           ],
         },
         files: {
