@@ -12,7 +12,6 @@ module.exports = function(grunt) {
         files: {
           'app/dist/styles.min.css': [
             'app/bower_components/bootstrap/dist/css/bootstrap.min.css', 
-            'app/bower_components/font-awesome/css/font-awesome.min.css', 
             'app/styles/app.css', 
             'app/styles/jumbotron-narrow.css'
           ],
@@ -132,5 +131,4 @@ module.exports = function(grunt) {
   
   grunt.registerTask('default', ['cssmin', 'uglify:scripts', 'cachebreaker', 'connect', 'watch']);
   grunt.registerTask('build', ['cssmin', 'uglify:all', 'cachebreaker']);
-  grunt.registerTask('live', ['connect_live']);
 };
