@@ -215,6 +215,14 @@ canvas.disable-animation {
         display: block;
         text-align: center;
     }
+
+    .likes {
+        width: 130px;
+        margin: 21px auto 10px auto;
+        display: block;
+        text-align: center;
+        clear: both;
+    }
     
 }
 
