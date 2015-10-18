@@ -1,0 +1,342 @@
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.action {
+    width: 128px;
+    height: 128px;
+    background: url(../images/homepage-actions-small.png);
+
+
+    margin: 0 auto;
+}
+
+.action.movie {
+    background-position: 0 0;
+}
+.action.clothes {
+    background-position: -128px 0;
+}
+.action.cooking {
+    background-position: -256px 0;
+}
+.action.book {
+    background-position: -384px 0;
+}
+.action.vacation {
+    background-position: -512px 0;
+}
+.action.music {
+    background-position: -640px 0;
+}
+
+.view {
+    text-align: center;
+}
+
+.add {
+    
+    position: relative;
+    margin: 10px auto;
+    text-align: center;
+}
+.add .col-lg-9 {
+    float: none;
+    margin: 0px auto;
+}
+.add ul {
+    margin: 10px;
+}
+
+.removeBadge {
+    float: right;
+    margin: 2px 5px;
+    
+    cursor: pointer;
+}
+
+#ask-button {
+    position: absolute;
+    margin: 225px 0 0 -265px;
+}
+
+.result {
+    width: 150px;
+    height: 150px;
+    background: #333333;
+    
+    border-radius: 100%;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -75px;
+    margin-left: -75px;
+    z-index: 6;
+    
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    
+    color: #FFFFFF;
+    font-size: 3em;
+    line-height: 150px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.result.animation-infinite {
+    top: 21%;
+}
+
+canvas {
+    width: 450px !important;
+    height: 450px !important;
+ 
+    position: relative;
+    margin: 21px auto;
+    
+    transition: 5s;
+    -webkit-transition: 5s;
+    -moz-transition: 5s;
+    -ms-transition: 5s;
+    -o-transition: 5s;
+
+    transition-timing-function: ease-out;
+    -webkit-transition-timing-function: ease-out;
+    -mox-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+}
+canvas.disable-animation {
+    transition: 0s;
+    -webkit-transition: 0s;
+    -moz-transition: 0s;
+    -ms-transition: 0s;
+    -o-transition: 0s;
+}
+
+#divAnswer {
+    opacity: 0;
+    display: none;
+    
+    position: relative;
+    
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+
+#button-ask {
+    position: relative;
+    z-index: 100;
+}
+
+.animation {    
+    position: relative;
+    vertical-align: top;
+    margin-bottom: 20px;
+}
+
+.footer {
+    text-align: center;
+}
+
+.twitter-share-button {
+    top: 5px;
+    display: inline-block;
+    position: relative !important;
+}
+
+#___plus_0 {
+    width: 42px !important;
+    top: 5px;
+    position: relative;
+}
+#___plus_0 iframe {
+    width: 100px !important;
+}
+
+.btn-group-feedback {
+    margin-left: 21px;
+}
+
+.clearfix-xs {
+    display: none;
+}
+
+#loading {
+    position: relative;
+    width: 100%;
+}
+
+#loading img {
+    margin: 50px auto;
+}
+
+/* Some responsive stuff
+ */
+
+@media screen and (max-width: 480px) {
+    
+    canvas {
+        width: 280px !important;
+        height: 280px !important;
+        margin: 10px auto;
+        position: relative;
+    }
+    
+    .result {
+        width: 100px;
+        height: 100px;
+        margin-top: -51px;
+        margin-left: -49px;
+        line-height: 100px;
+    }
+
+    .clearfix-xs {
+        display: block;
+        clear: both;
+    }
+
+    .btn-group-feedback {
+        width: 130px;
+        margin: 21px auto 10px auto;
+        display: block;
+        text-align: center;
+    }
+    
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Phones in portrait */
+@media screen and (max-width: 320px) {
+    .jumbotron p {
+        font-size: 14px;
+    }
+
+    canvas {
+        width: 200px !important;
+        height: 200px !important;
+        margin: 20px auto;
+    }
+    
+    .result {
+        width: 80px;
+        height: 80px;
+        margin-top: -43px;
+        margin-left: -39px;
+        line-height: 80px;
+    }
+
+    #loading {
+        margin: 0;
+        top: -20px;
+    }
+
+    #loading img {
+        width: 100%;
+        margin: 0;
+    }
+
+    #loading h1 {
+        font-size: 27px;
+        font-size: 2.7rem;
+    }
+
+    #loading h3 {
+        font-size: 20px;
+        font-size: 2rem;
+    }
+    
+}
+
+/* CSS Animations */
+.animation-infinite {
+    -webkit-animation-duration: 1s; 
+    animation-duration: 1s; 
+    -webkit-animation-fill-mode: both; 
+    animation-fill-mode: both; 
+    -webkit-animation-timing-function: ease-in-out; 
+    animation-timing-function: ease-in-out; 
+    animation-iteration-count:infinite; 
+    -webkit-animation-iteration-count:infinite; 
+} 
+
+.animation-once { 
+    -webkit-animation-duration: 1s; 
+    animation-duration: 1s; 
+    -webkit-animation-fill-mode: both; 
+    animation-fill-mode: both; 
+    -webkit-animation-timing-function: ease-in-out; 
+    animation-timing-function: ease-in-out; 
+    animation-iteration-count:1; 
+    -webkit-animation-iteration-count:1; 
+} 
+
+@-webkit-keyframes pulse { 
+    0% { -webkit-transform: scale(1); } 
+    50% { -webkit-transform: scale(1.1); } 
+    100% { -webkit-transform: scale(1); } 
+} 
+@keyframes pulse { 
+    0% { transform: scale(1); } 
+    50% { transform: scale(1.1); } 
+    100% { transform: scale(1); } 
+} 
+
+@-webkit-keyframes bounceIn { 
+    0% { 
+        opacity: 0; 
+        -webkit-transform: scale(.3); 
+    } 
+
+    50% { 
+        opacity: 1; 
+        -webkit-transform: scale(1.05); 
+    } 
+
+    70% { 
+        -webkit-transform: scale(.9); 
+    } 
+
+    100% { 
+         -webkit-transform: scale(1); 
+    } 
+} 
+
+@keyframes bounceIn { 
+    0% { 
+        opacity: 0; 
+        transform: scale(.3); 
+    } 
+
+    50% { 
+        opacity: 1; 
+        transform: scale(1.05); 
+    } 
+
+    70% { 
+        transform: scale(.9); 
+    } 
+
+    100% { 
+        transform: scale(1); 
+    } 
+} 
+
+.bounceIn { 
+    -webkit-animation-name: bounceIn; 
+    animation-name: bounceIn; 
+}
+
+.pulse { 
+    -webkit-animation-name: pulse; 
+    animation-name: pulse; 
+}
