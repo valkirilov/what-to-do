@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function copy {
-  mkdir live
+  rm -rf dist
   cp -R app dist
 }
 

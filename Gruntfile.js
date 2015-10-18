@@ -132,4 +132,5 @@ module.exports = function(grunt) {
   
   grunt.registerTask('default', ['cssmin', 'uglify:scripts', 'cachebreaker', 'connect', 'watch']);
   grunt.registerTask('build', ['cssmin', 'uglify:all', 'cachebreaker']);
+  grunt.registerTask('live', ['connect_live']);
 };

@@ -116,7 +116,7 @@ angular.module('whatToDo.controllers', [])
     $scope.init = function(inputCanvas) {           
         $scope.canvas = angular.element(inputCanvas);
         $scope.context = $scope.canvas.get(0).getContext("2d");
-        $scope.canvasSize =  { width: $scope.canvas.width, height: $scope.canvas.height };
+        $scope.canvasSize =  { width: $scope.canvas.width(), height: $scope.canvas.height() };
         
         // Init music
         $scope.musicRotate = new Audio();
@@ -253,10 +253,11 @@ angular.module('whatToDo.controllers', [])
     };
     
     $scope.drawChart = function(options) {
-        $scope.canvas.width = $scope.canvasSize.width;
-        $scope.canvas.height = $scope.canvasSize.height;
+        //$scope.canvas.attr('width', $scope.canvasSize.width);
+        //$scope.canvas.attr('height', $scope.canvasSize.height);
 
         options.showTooltips = false;
+        //options.responsive = false;
         $scope.chart = new Chart($scope.context).Doughnut($scope.items, options);
     };
     

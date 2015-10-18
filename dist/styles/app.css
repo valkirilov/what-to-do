@@ -94,8 +94,8 @@ html, body {
 }
 
 canvas {
-    width: 450px;
-    height: 450px;
+    width: 450px !important;
+    height: 450px !important;
  
     position: relative;
     margin: 21px auto;
@@ -186,8 +186,8 @@ canvas.disable-animation {
 @media screen and (max-width: 480px) {
     
     canvas {
-        width: 280px;
-        height: 280px;
+        width: 280px !important;
+        height: 280px !important;
         margin: 10px auto;
         position: relative;
     }
@@ -222,8 +222,8 @@ Phones in portrait */
     }
 
     canvas {
-        width: 200px;
-        height: 200px;
+        width: 200px !important;
+        height: 200px !important;
         margin: 20px auto;
     }
     
