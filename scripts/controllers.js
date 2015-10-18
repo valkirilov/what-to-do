@@ -8,7 +8,7 @@
 // test on firefox
 
 angular.module('whatToDo.controllers', [])
-.controller('GlobalController', ['$rootScope', '$scope', '$firebaseObject', '$firebaseArray', function($rootScope, $scope, $firebaseObject, $firebaseArray) {
+.controller('GlobalController', ['$rootScope', '$scope', '$firebaseObject', '$firebaseArray', '$timeout', 'DatabaseService', function($rootScope, $scope, $firebaseObject, $firebaseArray, $timeout, DatabaseService) {
     var currentDate = new Date();
     $rootScope.app = {
         year: currentDate.getFullYear(),
@@ -16,7 +16,6 @@ angular.module('whatToDo.controllers', [])
     };
 
     $rootScope.firebaseRef;
-    $rootScope.firebaseQuestions;
 
     $rootScope.questionObject = {
         text: '',
@@ -25,46 +24,61 @@ angular.module('whatToDo.controllers', [])
         date: null,
         isLiked: -1
     };
+    $rootScope.questionUrl;
 
     $scope.init = function() {
         // Make the Firebase connection
-        $rootScope.firebaseRef = new Firebase("https://what-to-do-app.firebaseio.com/questions/");
+        $rootScope.firebaseRef = new Firebase("https://what-to-do-app.firebaseio.com/");
+        DatabaseService.init($rootScope.firebaseRef);
 
-        $rootScope.firebaseQuestions = $firebaseArray($rootScope.firebaseRef);
+        angular.element('#loading').hide();
+        angular.element('#app-content').show();
     };
 
     $rootScope.addQuestionToDB = function(question) {
         question.text = question.text || "";
 
-        $rootScope.firebaseQuestions.$add(question).then(function(ref) {
-            $rootScope.questionObject.key = ref.key();
+        var promise = DatabaseService.addQuestion(question);
+
+        promise.then(function(ref) {
+            $timeout(function() {
+                $scope.$apply(function() {
+                    $rootScope.questionObject.key = ref.key();
+                });
+            }, 100);
         });
     };
 
     $rootScope.saveQuestionToDB = function(question) {
-        var questionDB = $rootScope.firebaseQuestions.$getRecord(question.key);
-
-        questionDB.isLiked = question.isLiked;
-
-        $rootScope.firebaseQuestions.$save(questionDB);
+        DatabaseService.saveQuestion(question);
     };
 
     $rootScope.buttonAsk = function() {
-        angular.element('#container-marketing').slideUp(function() {
-            var containerApp = angular.element('#container-app');
+        angular.element('#home-jumbotron').slideUp(function() {
+            angular.element('#container-marketing').slideUp(function() {
+                var containerApp = angular.element('#container-app');
 
-            angular.element('html,body').animate({
-                scrollTop: containerApp.offset().top - 160
-            }, 500);
+                angular.element('html,body').animate({
+                    scrollTop: containerApp.offset().top - 160
+                }, 500);
 
-            containerApp.find('input:first').focus();
+                containerApp.find('input:first').focus();
+            });
         });
     };
+
+    $rootScope.$watch('questionObject.key', function(newValue, newValue2) {
+        $rootScope.questionUrl = window.location.origin + "/#/q/" + newValue;
+
+        angular.element('#fb-share').attr('data-href', $rootScope.questionUrl);
+        angular.element('#twitter-share').attr('url', $rootScope.questionUrl);
+        angular.element('#goole-share').attr('data-href', $rootScope.questionUrl);
+    });
 
 
     $scope.init();
 }])
-.controller('AppController', ['$rootScope', '$scope', '$timeout', '$interval', function($rootScope, $scope, $timeout, $interval) {
+.controller('AppController', ['$rootScope', '$scope', '$timeout', '$interval', '$stateParams', 'DatabaseService', function($rootScope, $scope, $timeout, $interval, $stateParams, DatabaseService) {
 
     $scope.data = [];
     $scope.items = [];
@@ -86,9 +100,9 @@ angular.module('whatToDo.controllers', [])
         ['#ED5565', '#FC6E51', '#FFCE54', '#A0D468', '#4FC1E9', '#5D9CEC', '#AC92EC', '#EC87C0', '#656D78', '#DA4453', '#E9573F', '#F6BB42', '#8CC152', '#4A89DC', '#967ADC', '#D770AD'], // http://tintui.com/flattastic.html
         ['#001F3F', '#0074D9', '#7FDBFF', '#39CCCC', '#3D9970', '#2ECC40', '#01FF70', '#FFDC00', '#FF851B', '#FF4136', '#85144B', '#F012BE', '#B10DC9'], // http://tintui.com/clrs.html
 
-        ['#39D5FF', '#29C5FF', '#19B5FE', '#22A7F0', '#1297E0', '#0287D0', '#0077C0', '#0067B0', '#0057A0', '#004790', '#003780', '#102770'], // http://www.flatcolorsui.com/
-        ['#8EFFC1', '#5EFCA1', '#4EEC91', '#3EDC81', '#2ECC71', '#1EBC61', '#1EBC61', '#009C41', '#008C31', '#007C21', '#006C11', '#005C01'], // http://www.flatcolorsui.com/
-        ['#FDE3A7', '#FFCF4B', '#F9BF3B', '#F9B32F', '#F5AB35', '#F39C12', '#F1892D', '#E67E22', '#D87400', '#C86400', '#B85400', '#A84410'], // http://www.flatcolorsui.com/
+        //['#39D5FF', '#29C5FF', '#19B5FE', '#22A7F0', '#1297E0', '#0287D0', '#0077C0', '#0067B0', '#0057A0', '#004790', '#003780', '#102770'], // http://www.flatcolorsui.com/
+        //['#8EFFC1', '#5EFCA1', '#4EEC91', '#3EDC81', '#2ECC71', '#1EBC61', '#1EBC61', '#009C41', '#008C31', '#007C21', '#006C11', '#005C01'], // http://www.flatcolorsui.com/
+        //['#FDE3A7', '#FFCF4B', '#F9BF3B', '#F9B32F', '#F5AB35', '#F39C12', '#F1892D', '#E67E22', '#D87400', '#C86400', '#B85400', '#A84410'], // http://www.flatcolorsui.com/
     ];
     $scope.colors = [];
     $scope.nextColor = 0;
@@ -97,6 +111,7 @@ angular.module('whatToDo.controllers', [])
     $scope.musicFinish = null;
     $scope.soundRotate = "./sounds/start.wav";
     $scope.soundFinish = "./sounds/end.wav";
+    $scope.loadingQuestion = false;
     
     $scope.init = function(inputCanvas) {           
         $scope.canvas = angular.element(inputCanvas);
@@ -116,7 +131,20 @@ angular.module('whatToDo.controllers', [])
         $scope.musicFinish.load();
 
         $scope.getCollorPalette();
+
+        var clipboard = new Clipboard('#btn-copy-clipboard');
     };
+
+    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+        // Check on which route we are
+        if (toState.name === 'question') {
+            $scope.loadingQuestion = true;    
+            DatabaseService.loadQuestion(toParams.questionId, $scope.loadQuestion);
+        }
+        else {
+            $scope.newQuestion();
+        }
+    });
     
     $scope.getCollorPalette = function() {
         var pallete = $scope.getRandom(colorPalletes.length);
@@ -199,23 +227,28 @@ angular.module('whatToDo.controllers', [])
     };
     
     $scope.prepareChoices = function() {
-        
         $scope.items = [];
         
         $scope.nextColor = 0;
         var size = 100 / $scope.data.length;
         for (var item in $scope.data) {
-            $scope.nextColor = ( ++$scope.nextColor == $scope.colors.length) ? 0 : $scope.nextColor;
-            
             var newItem = {};
+            if ($scope.data[item].color) {
+                newItem.color = $scope.data[item].color;
+            }
+            else {
+                $scope.nextColor = ( ++$scope.nextColor == $scope.colors.length) ? 0 : $scope.nextColor;
+                newItem.color = $scope.colors[$scope.nextColor];
+            }
+            
+            
             newItem.value = size;
-            newItem.color = $scope.colors[$scope.nextColor];
             newItem.name = $scope.data[item].name;
             newItem.id = $scope.data[item].id;
             
             $scope.items.push(newItem);
         }
-        
+    
         $scope.drawChart({animateRotate : false, animateScale : true});
     };
     
@@ -248,8 +281,8 @@ angular.module('whatToDo.controllers', [])
         $scope.changeAnswerDivVisibility();
         $scope.showResultCircle('?', '#333333');
         
-        var rotationTimes = $scope.items.length * 3; // We want cool rotations
-        var step = $scope.getRandom(360*rotationTimes);
+        var rotationTimes = 360 * 10 / $scope.items.length; // We want cool rotations
+        var step = $scope.getRandom(rotationTimes);
         
         var rotation = 'rotate(' + step + 'deg)';
         
@@ -306,6 +339,7 @@ angular.module('whatToDo.controllers', [])
                 answer: {
                     badge: resultBadge.text(),
                     name: resultName.text(),
+                    color: resultStyle
                 },
                 date: currentDate.toString(),
                 isLiked: -1
@@ -357,12 +391,39 @@ angular.module('whatToDo.controllers', [])
         $scope.divResult.text(result);
         $scope.divResult.css('background-color', color);
     };
+
+    $scope.loadQuestion = function(question) {
+
+        angular.element('#loading-question').slideUp();
+
+        $timeout(function() {
+            $scope.$apply(function() {
+                $scope.loadingQuestion = false;
+                $scope.question = question.text;
+                $scope.data = question.options;
+
+                $scope.prepareChoices();
+                $scope.drawChart({animateRotate : false, animateScale : true});
+                
+                $scope.divResult.addClass('animation-once');
+                $scope.divResult.addClass('bounceIn');
+            
+                var resultBadge = angular.element('#resultBadge');
+                var resultName = angular.element('#resultName');
+            
+                resultBadge.css('background-color', question.answer.color);
+                resultBadge.text(question.answer.badge);
+                resultName.text(question.answer.name);
+            
+                $scope.changeAnswerDivVisibility(1);
+                $scope.showResultCircle(question.answer.badge, question.answer.color);
+                $scope.askResult = true;
+            });
+            $rootScope.$apply(function() {
+                $rootScope.questionObject.key = question.$id;
+            });
+        }, 100);
+    };
     
     $scope.init('#canvas');
-}])
-.controller('MyCtrl1', [function() {
-
-}])
-.controller('MyCtrl2', [function() {
-
 }]);

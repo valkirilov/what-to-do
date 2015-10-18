@@ -51,12 +51,14 @@ angular.module('whatToDo', [
       // Use $stateProvider to configure your states.
       $stateProvider
         .state("app", {
-
           url: "/",
           templateUrl: './partials/home.html',
         })
+        .state("question", {
+          url: "/q/{questionId:[a-zA-Z0-9_-]+}",
+          templateUrl: './partials/question.html',
+        })
         .state("contacts", {
-
           url: "/contacts",
           templateUrl: './partials/contacts.html'
         });

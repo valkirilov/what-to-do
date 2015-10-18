@@ -18,33 +18,31 @@
   <meta property="og:description"   content="Sometimes you have a lot of things on your mind and you cannot choose only one to do. We can help you.. You can ask us for help about everything, just type the options and we will choose the right choice for you problem." />
   <meta property="og:image" content="http://valkirilov.github.io/what-to-do/images/cover.png" />
   
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=V22Lk7ELOC" />
-  <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png?v=V22Lk7ELOC">
-  <link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png?v=V22Lk7ELOC">
-  <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png?v=V22Lk7ELOC">
-  <link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png?v=V22Lk7ELOC">
-  <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png?v=V22Lk7ELOC">
-  <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png?v=V22Lk7ELOC">
-  <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png?v=V22Lk7ELOC">
-  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png?v=V22Lk7ELOC">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png?v=V22Lk7ELOC">
-  <link rel="icon" type="image/png" href="favicon-32x32.png?v=V22Lk7ELOC" sizes="32x32">
-  <link rel="icon" type="image/png" href="android-chrome-192x192.png?v=V22Lk7ELOC" sizes="192x192">
-  <link rel="icon" type="image/png" href="favicon-96x96.png?v=V22Lk7ELOC" sizes="96x96">
-  <link rel="icon" type="image/png" href="favicon-16x16.png?v=V22Lk7ELOC" sizes="16x16">
-  <link rel="manifest" href="manifest.json?v=V22Lk7ELOC">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=V22Lk7ELOC2" />
+  <link rel="icon" type="image/png" href="images/favicons/favicon-32x32.png?v=V22Lk7ELOC2" sizes="32x32">
+  <link rel="icon" type="image/png" href="images/favicons/android-chrome-192x192.png?v=V22Lk7ELOC2" sizes="192x192">
+  <link rel="icon" type="image/png" href="images/favicons/favicon-96x96.png?v=V22Lk7ELOC2" sizes="96x96">
+  <link rel="icon" type="image/png" href="images/favicons/favicon-16x16.png?v=V22Lk7ELOC2" sizes="16x16">
+  <link rel="manifest" href="images/favicons/manifest.json?v=V22Lk7ELOC2">
   <link rel="shortcut icon" href="favicon.ico?v=V22Lk7ELOC">
   <meta name="apple-mobile-web-app-title" content="What to do?">
   <meta name="application-name" content="What to do?">
   <meta name="msapplication-TileColor" content="#2d89ef">
-  <meta name="msapplication-TileImage" content="mstile-144x144.png?v=V22Lk7ELOC">
+  <meta name="msapplication-TileImage" content="images/favicons/mstile-144x144.png?v=V22Lk7ELOC2">
   <meta name="theme-color" content="#ffffff">
 
+  <!-- Dev -->
+  <!--
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
-  <!-- <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" /> -->
   
   <link rel="stylesheet" href="styles/app.css?v.2.0.2"/>
   <link rel="stylesheet" href="styles/jumbotron-narrow.css"/>
+  -->
+
+  <!-- Production -->
+  <!-- -->
+  <link rel="stylesheet" href="dist/styles.min.css?rel=1445188437901"/>
+  <!-- -->
   
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,7 +53,13 @@
 </head>
 <body ng-controller="GlobalController">
     
-  <div class="container">
+  <div id="loading" class="text-center">
+    <img src="images/logo-260.png" class="img img-resposnive">
+    <h1>What to do? App</h1>
+    <h3>No more hesitations</h3>
+  </div>
+
+  <div id="app-content" class="container" style="display: none;">
     <div class="header">
       <h3 class="text-muted pull-left">What-to-do? App</h3>
       <ul class="nav nav-pills pull-right">
@@ -69,9 +73,9 @@
 
     <div class="view" ui-view></div>
       
-    <div ng-controller="AppController" ng-show="$state.current.name === 'app'">
+    <div ng-controller="AppController" ng-show="$state.current.name === 'app' || $state.current.name === 'question'">
       <div id="container-app" class="row add">
-          <div class="col-lg-9">
+          <div class="col-lg-9" ng-hide="loadingQuestion === true">
 
               <div class="panel panel-default">
                   <div class="panel-heading">
@@ -120,9 +124,13 @@
                           <span id="resultName"></span>
 
                           <div class="clearfix-xs"></div>
-                          <div class="btn-group btn-group-feedback" role="group" ng-hide="questionObject.isLiked >= 0" aria-label="...">
-                            <button type="button" class="btn btn-success btn-xs" ng-click="voteQuestion(1)"> &nbsp; Lite it &nbsp; </button>
-                            <button type="button" class="btn btn-danger btn-xs" ng-click="voteQuestion(0)"> &nbsp; Dislike! &nbsp; </button>
+                          <div class="btn-group btn-group-feedback" role="group" ng-hide="questionObject.isLiked >= 0">
+                            <button type="button" class="btn btn-success btn-xs" ng-click="voteQuestion(1)">
+                              <span class="fa fa-plus"></span>&nbsp; Lite it &nbsp; 
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="voteQuestion(0)">
+                             <span class="fa fa-minus"></span>&nbsp; Dislike! &nbsp; 
+                            </button>
                           </div>
                           <span class="btn-group-feedback" ng-show="questionObject.isLiked >= 0">Thanks for the feedback!</span>
                       </h4>
@@ -130,11 +138,27 @@
                       <br /><br />
 
                       <h4>Share it to your friends</h4>
-                      <div class="fb-share-button" data-href="//valkirilov.github.io/what-to-do/" data-layout="button"></div>
+                      <div class="col-sm-6">
+                        <div id="fb-share" class="fb-share-button" data-href="//valkirilov.github.io/what-to-do/" data-layout="button"></div>
 
-                      <a href="https://twitter.com/share" class="twitter-share-button" data-text="What-to-do App? helps me with my everyday decisions. Check it out:" data-hashtags="what-to-do app" data-count="none">Tweet</a>
+                        <a id="twitter-share" href="https://twitter.com/share" class="twitter-share-button" data-text="What-to-do App? helps me with my everyday decisions. Check it out:" data-hashtags="what-to-do app" data-count="none">Tweet</a>
 
-                      <div class="g-plus" data-action="share" data-annotation="none"></div>
+                        <div id="google-share" class="g-plus" data-action="share" data-annotation="none"></div>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <div class="input-group">
+                          <input type="text" id="question-copy-url" class="form-control" 
+                            ng-model="questionUrl" placeholder="Copy question">
+                          <span class="input-group-btn">
+                            <button id="btn-copy-clipboard" class="btn btn-default" data-clipboard-target="#question-copy-url" type="button">
+                              <span class="fa fa-clipboard"></span>
+                            </button>
+                          </span>
+                        </div><!-- /input-group -->
+                      </div>
+
+                      <div class="clearfix"></div>
 
                       <br /><br />
 
@@ -178,6 +202,8 @@
 
   </div> <!-- /container -->
 
+  <!-- Dev -->
+  <!--
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   
@@ -187,13 +213,20 @@
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script type="text/javascript" src="bower_components/angularfire/dist/angularfire.min.js"></script>
   <script type="text/javascript" src="bower_components/Chart.js/Chart.min.js"></script>
+  <script type="text/javascript" src="bower_components/clipboard/dist/clipboard.min.js"></script>
 
-  <!-- Should be minified -->
   <script type="text/javascript" src="scripts/app.js?v.2.0.2"></script>
   <script type="text/javascript" src="scripts/services.js?v.2.0.2"></script>
   <script type="text/javascript" src="scripts/controllers.js?v.2.0.2"></script>
   <script type="text/javascript" src="scripts/filters.js?v.2.0.2"></script>
   <script type="text/javascript" src="scripts/directives.js?v.2.0.2"></script>
+  -->
+
+  <!-- Producntion -->
+  <!-- -->
+  <script type="text/javascript" src="dist/libs.min.js?rel=1445188437902"></script>
+  <script type="text/javascript" src="dist/scripts.min.js?rel=1445188437905"></script>
+  <!-- -->
 
   <div id="fb-root"></div>
   <script>(function(d, s, id) {

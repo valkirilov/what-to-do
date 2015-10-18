@@ -1,4 +1,9 @@
 
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 .action {
     width: 128px;
     height: 128px;
@@ -150,7 +155,7 @@ canvas.disable-animation {
 }
 
 #___plus_0 {
-    width: 100px !important;
+    width: 42px !important;
     top: 5px;
     position: relative;
 }
@@ -164,6 +169,15 @@ canvas.disable-animation {
 
 .clearfix-xs {
     display: none;
+}
+
+#loading {
+    position: relative;
+    width: 100%;
+}
+
+#loading img {
+    margin: 50px auto;
 }
 
 /* Some responsive stuff
@@ -219,6 +233,26 @@ Phones in portrait */
         margin-top: -43px;
         margin-left: -39px;
         line-height: 80px;
+    }
+
+    #loading {
+        margin: 0;
+        top: -20px;
+    }
+
+    #loading img {
+        width: 100%;
+        margin: 0;
+    }
+
+    #loading h1 {
+        font-size: 27px;
+        font-size: 2.7rem;
+    }
+
+    #loading h3 {
+        font-size: 20px;
+        font-size: 2rem;
     }
     
 }
