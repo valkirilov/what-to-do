@@ -1,7 +1,8 @@
 #!/bin/bash
 
 function copy {
-  cp -R app/* dist/
+  mkdir live
+  cp -R app dist
 }
 
 function push {

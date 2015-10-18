@@ -10,11 +10,11 @@ module.exports = function(grunt) {
       },
       target: {
         files: {
-          'dist/styles.min.css': [
-            'bower_components/bootstrap/dist/css/bootstrap.min.css', 
-            'bower_components/font-awesome/css/font-awesome.min.css', 
-            'styles/app.css', 
-            'styles/jumbotron-narrow.css'
+          'app/dist/styles.min.css': [
+            'app/bower_components/bootstrap/dist/css/bootstrap.min.css', 
+            'app/bower_components/font-awesome/css/font-awesome.min.css', 
+            'app/styles/app.css', 
+            'app/styles/jumbotron-narrow.css'
           ],
         }
       }
@@ -26,33 +26,33 @@ module.exports = function(grunt) {
       },
       all: {
         files: {
-          'dist/libs.min.js': [
-            'bower_components/jquery/dist/jquery.min.js', 
-            'bower_components/bootstrap/dist/js/bootstrap.min.js', 
-            'bower_components/firebase/firebase.js', 
-            'bower_components/angular/angular.min.js', 
-            'bower_components/angular-ui-router/release/angular-ui-router.min.js',
-            'bower_components/angularfire/dist/angularfire.min.js',
-            'bower_components/Chart.js/Chart.min.js',
-            'bower_components/clipboard/dist/clipboard.min.js',
+          'app/dist/libs.min.js': [
+            'app/bower_components/jquery/dist/jquery.min.js', 
+            'app/bower_components/bootstrap/dist/js/bootstrap.min.js', 
+            'app/bower_components/firebase/firebase.js', 
+            'app/bower_components/angular/angular.min.js', 
+            'app/bower_components/angular-ui-router/release/angular-ui-router.min.js',
+            'app/bower_components/angularfire/dist/angularfire.min.js',
+            'app/bower_components/Chart.js/Chart.min.js',
+            'app/bower_components/clipboard/dist/clipboard.min.js',
           ],
-          'dist/scripts.min.js': [
-            'scripts/app.js', 
-            'scripts/controllers.js', 
-            'scripts/directives.js', 
-            'scripts/filters.js', 
-            'scripts/services.js'
+          'app/dist/scripts.min.js': [
+            'app/scripts/app.js', 
+            'app/scripts/controllers.js', 
+            'app/scripts/directives.js', 
+            'app/scripts/filters.js', 
+            'app/scripts/services.js'
           ]
         }
       },
       scripts: {
         files: {
-          'dist/scripts.min.js': [
-            'scripts/directives.js', 
-            'scripts/filters.js', 
-            'scripts/services.js',
-            'scripts/controllers.js',
-            'scripts/app.js', 
+          'app/dist/scripts.min.js': [
+            'app/scripts/directives.js', 
+            'app/scripts/filters.js', 
+            'app/scripts/services.js',
+            'app/scripts/controllers.js',
+            'app/scripts/app.js', 
           ]
         }
       }
@@ -63,13 +63,13 @@ module.exports = function(grunt) {
       dev: {
         options: {
           match: [
-            'dist/styles.min.css',
-            'dist/libs.min.js',
-            'dist/scripts.min.js',
+            'app/dist/styles.min.css',
+            'app/dist/libs.min.js',
+            'app/dist/scripts.min.js',
           ],
         },
         files: {
-          src: ['index.html']
+          src: ['app/index.html']
         }
       }
     },
@@ -82,7 +82,7 @@ module.exports = function(grunt) {
         options: {
           livereload: false
         },
-        files: ['styles/*.css', 'scripts/*.js'],
+        files: ['app/styles/*.css', 'app/scripts/*.js'],
         tasks: ['cssmin', 'uglify:scripts', 'notify:watch', 'cachebreaker'],
       },
     },
@@ -92,6 +92,7 @@ module.exports = function(grunt) {
         options: {
           port: 3030,
           hostname: '*',
+          base: 'app'
         }
       }
     },
