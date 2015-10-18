@@ -93,6 +93,10 @@ html, body {
     top: 21%;
 }
 
+.likes {
+    margin-left: 20px;
+}
+
 canvas {
     width: 450px !important;
     height: 450px !important;

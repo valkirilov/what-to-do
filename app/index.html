@@ -41,7 +41,7 @@
 
   <!-- Production -->
   <!-- -->
-  <link rel="stylesheet" href="dist/styles.min.css?rel=1445195610182"/>
+  <link rel="stylesheet" href="dist/styles.min.css?rel=1445198292449"/>
   <!-- -->
   
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -124,15 +124,22 @@
                           <span id="resultName"></span>
 
                           <div class="clearfix-xs"></div>
-                          <div class="btn-group btn-group-feedback" role="group" ng-hide="questionObject.isLiked >= 0">
+                          <div class="btn-group btn-group-feedback" role="group" ng-hide="questionObject.isLikedAdded >= 0">
                             <button type="button" class="btn btn-success btn-xs" ng-click="voteQuestion(1)">
-                              <span class="fa fa-plus"></span>&nbsp; Lite it &nbsp; 
+                              &nbsp; Lite it &nbsp; 
                             </button>
                             <button type="button" class="btn btn-danger btn-xs" ng-click="voteQuestion(0)">
-                             <span class="fa fa-minus"></span>&nbsp; Dislike! &nbsp; 
+                             &nbsp; Dislike! &nbsp; 
                             </button>
                           </div>
-                          <span class="btn-group-feedback" ng-show="questionObject.isLiked >= 0">Thanks for the feedback!</span>
+                          <span class="btn-group-feedback" ng-show="questionObject.isLikedAdded >= 0">
+                            Thanks for the feedback!
+                          </span>
+                          <span class="likes" ng-show="questionObject.isLikedAdded >= 0">
+                            Votes: 
+                            <span class="fa fa-plus"></span> {{ questionObject.isLiked | likes }}
+                            <span class="fa fa-minus"></span> {{ questionObject.isLiked | dislikes }}
+                          </span>
                       </h4>
                       
                       <br /><br />
@@ -222,8 +229,8 @@
   
   <!-- Producntion -->
   <!-- -->
-  <script type="text/javascript" src="dist/libs.min.js?rel=1445195610182"></script>
-  <script type="text/javascript" src="dist/scripts.min.js?rel=1445195610183"></script>
+  <script type="text/javascript" src="dist/libs.min.js?rel=1445198292450"></script>
+  <script type="text/javascript" src="dist/scripts.min.js?rel=1445198292450"></script>
   <!-- -->
 
   <div id="fb-root"></div>

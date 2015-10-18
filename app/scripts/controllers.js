@@ -22,7 +22,8 @@ angular.module('whatToDo.controllers', [])
         options: [],
         answer: null,
         date: null,
-        isLiked: -1
+        isLiked: [ -1 ],
+        isLikedAdded: -1
     };
     $rootScope.questionUrl;
 
@@ -343,7 +344,8 @@ angular.module('whatToDo.controllers', [])
                     color: resultStyle
                 },
                 date: currentDate.toString(),
-                isLiked: -1
+                isLiked: [ -1 ],
+                isLikedAdded: -1
             };
             $rootScope.addQuestionToDB($rootScope.questionObject);
         }, 5000);
@@ -361,7 +363,8 @@ angular.module('whatToDo.controllers', [])
             options: [],
             answer: null,
             date: null,
-            isLiked: -1
+            isLiked: [ -1 ],
+            isLikedAdded: -1
         };
 
         $scope.getCollorPalette();
@@ -377,9 +380,14 @@ angular.module('whatToDo.controllers', [])
     };
 
     $scope.voteQuestion = function(vote) {
-        $rootScope.questionObject.isLiked = vote;
-
+        $rootScope.questionObject.isLiked.push(vote);
         $rootScope.saveQuestionToDB($rootScope.questionObject);
+
+        $timeout(function() {
+            $rootScope.$apply(function() {
+                $rootScope.questionObject.isLikedAdded = vote;
+            });
+        }, 100);
     };
 
     $scope.setRotation = function(rotation) {
@@ -399,6 +407,7 @@ angular.module('whatToDo.controllers', [])
 
         $timeout(function() {
             $scope.$apply(function() {
+                $rootScope.questionObject = question;
                 $scope.loadingQuestion = false;
                 $scope.question = question.text;
                 $scope.data = question.options;
