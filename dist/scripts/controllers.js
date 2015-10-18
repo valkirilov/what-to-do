@@ -68,7 +68,7 @@ angular.module('whatToDo.controllers', [])
     };
 
     $rootScope.$watch('questionObject.key', function(newValue, newValue2) {
-        $rootScope.questionUrl = window.location.origin + "/#/q/" + newValue;
+        $rootScope.questionUrl = "http://valkirilov.github.io/what-to-do/#/q/" + newValue;
 
         angular.element('#fb-share').attr('data-href', $rootScope.questionUrl);
         angular.element('#twitter-share').attr('url', $rootScope.questionUrl);
