@@ -250,6 +250,12 @@ angular.module('whatToDo.controllers', [])
             $scope.items.push(newItem);
         }
     
+        // Reset the canvas
+        $scope.canvas.addClass('disable-animation');
+        $scope.setRotation('rotate(0deg)');
+
+        $scope.resetDivResult();
+
         $scope.drawChart({animateRotate : false, animateScale : true});
     };
     
@@ -264,12 +270,14 @@ angular.module('whatToDo.controllers', [])
     
     $scope.changeAnswerDivVisibility = function(status) {
         if (status === 1) {
-            $scope.divAnswer.css('opacity', '1');
-            $scope.divAnswer.css('display', 'block');
+            $scope.divAnswer.slideDown();
+            //$scope.divAnswer.css('opacity', '1');
+            //$scope.divAnswer.css('display', 'block');
         }
         else {
-            $scope.divAnswer.css('opacity', '0');
-            $scope.divAnswer.css('display', 'none');
+            //$scope.divAnswer.css('opacity', '0');
+            //$scope.divAnswer.css('display', 'none');
+            $scope.divAnswer.slideUp();
         }
     };
     
@@ -283,19 +291,17 @@ angular.module('whatToDo.controllers', [])
         $scope.changeAnswerDivVisibility();
         $scope.showResultCircle('?', '#333333');
         
-        var rotationTimes = 360 * 10 / $scope.items.length; // We want cool rotations
-        var step = $scope.getRandom(rotationTimes);
+        var rotationRandom = $scope.getRandom($scope.items.length);
+        rotationRandom = rotationRandom < 5 ? 10: rotationRandom;
+        var rotationTimes = 360 * rotationRandom; // We want cool rotations
+        var step = rotationTimes;
         
         var rotation = 'rotate(' + step + 'deg)';
-        
-        // Reset the canvas
-        $scope.canvas.addClass('disable-animation');
-        $scope.setRotation('rotate(0deg)');
 
         // Apply the new rotation
         $scope.canvas.removeClass('disable-animation');
         $scope.setRotation(rotation);
-        
+
         $scope.askButton = false;
         $scope.askResult = true;
         
@@ -331,7 +337,9 @@ angular.module('whatToDo.controllers', [])
             resultBadge.text($scope.items[resultIndex].id);
             resultName.text($scope.items[resultIndex].name);
             
-            $scope.changeAnswerDivVisibility(1);
+            $timeout(function() {
+                $scope.changeAnswerDivVisibility(1);
+            }, 1000);
 
             // Add the result to the DB
             var currentDate = new Date();
@@ -368,15 +376,21 @@ angular.module('whatToDo.controllers', [])
         };
 
         $scope.getCollorPalette();
-
-        $scope.divResult.removeClass('animation-once');
-        $scope.divResult.removeClass('bounceIn');
+        $scope.resetDivResult();
 
         $scope.changeAnswerDivVisibility(0);
         $scope.drawChart({});
         $scope.showResultCircle('?', '#333333');
 
         $rootScope.buttonAsk();
+    };
+
+    $scope.resetDivResult = function() {
+        $scope.divResult.removeClass('animation-once');
+        $scope.divResult.removeClass('bounceIn');
+
+        //$scope.divResult.addClass('animation-infinite');
+        //$scope.divResult.addClass('pulse');
     };
 
     $scope.voteQuestion = function(vote) {
