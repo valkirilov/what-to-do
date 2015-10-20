@@ -30,6 +30,5 @@
   },
   "_source": "git://github.com/firebase/firebase-bower.git",
   "_target": "~2.2.9",
-  "_originalSource": "firebase",
-  "_direct": true
+  "_originalSource": "firebase"
 }

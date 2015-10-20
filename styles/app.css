@@ -1,4 +1,9 @@
 
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 .action {
     width: 128px;
     height: 128px;
@@ -88,9 +93,13 @@
     top: 21%;
 }
 
+.likes {
+    margin-left: 20px;
+}
+
 canvas {
-    width: 450px;
-    height: 450px;
+    width: 450px !important;
+    height: 450px !important;
  
     position: relative;
     margin: 21px auto;
@@ -116,16 +125,16 @@ canvas.disable-animation {
 }
 
 #divAnswer {
-    opacity: 0;
+    /* opacity: 0; */
     display: none;
     
     position: relative;
     
-    transition: 0.5s;
+    transition:         0.5s;
     -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    -ms-transition: 0.5s;
-    -o-transition: 0.5s;
+    -moz-transition:    0.5s;
+    -ms-transition:     0.5s;
+    -o-transition:      0.5s;
 }
 
 #button-ask {
@@ -150,7 +159,7 @@ canvas.disable-animation {
 }
 
 #___plus_0 {
-    width: 100px !important;
+    width: 42px !important;
     top: 5px;
     position: relative;
 }
@@ -166,14 +175,23 @@ canvas.disable-animation {
     display: none;
 }
 
+#loading {
+    position: relative;
+    width: 100%;
+}
+
+#loading img {
+    margin: 50px auto;
+}
+
 /* Some responsive stuff
  */
 
 @media screen and (max-width: 480px) {
     
     canvas {
-        width: 280px;
-        height: 280px;
+        width: 280px !important;
+        height: 280px !important;
         margin: 10px auto;
         position: relative;
     }
@@ -197,6 +215,14 @@ canvas.disable-animation {
         display: block;
         text-align: center;
     }
+
+    .likes {
+        width: 130px;
+        margin: 21px auto 10px auto;
+        display: block;
+        text-align: center;
+        clear: both;
+    }
     
 }
 
@@ -208,8 +234,8 @@ Phones in portrait */
     }
 
     canvas {
-        width: 200px;
-        height: 200px;
+        width: 200px !important;
+        height: 200px !important;
         margin: 20px auto;
     }
     
@@ -219,6 +245,26 @@ Phones in portrait */
         margin-top: -43px;
         margin-left: -39px;
         line-height: 80px;
+    }
+
+    #loading {
+        margin: 0;
+        top: -20px;
+    }
+
+    #loading img {
+        width: 100%;
+        margin: 0;
+    }
+
+    #loading h1 {
+        font-size: 27px;
+        font-size: 2.7rem;
+    }
+
+    #loading h3 {
+        font-size: 20px;
+        font-size: 2rem;
     }
     
 }
