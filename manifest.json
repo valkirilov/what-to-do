@@ -5,11 +5,11 @@
   "manifest_version": 2,
   "app": {
     "background": {
-      "scripts": ["background.js"]
+      "scripts": ["app/background.js"]
     }
   },
   "icons": { 
-    "16": "app/images/favicons/favicon-16x16.png", 
-    "128": "app/images/favicons/favicon-128x128.png" 
+    "16": "what-to-do/app/images/favicons/favicon-16x16.png", 
+    "128": "what-to-do/app/images/favicons/favicon-128x128.png" 
   }
 }

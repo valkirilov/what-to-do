@@ -1,0 +1,3 @@
+[submodule "what-to-do"]
+	path = what-to-do
+	url = https://github.com/valkirilov/what-to-do.git
