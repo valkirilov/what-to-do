@@ -1,0 +1,14 @@
+{
+  "manifestExtName": {
+    "message": "What-to-do? App"
+  },
+  "manifestExtDescription": {
+    "message": "This is simple app that helps you to choose what to do from a list with options."
+  },
+  "manifestBrowserActionButton": {
+    "message": "What-to-do?"
+  },
+  "manifestContextActionButton": {
+    "message": "Add a new option"
+  }
+}

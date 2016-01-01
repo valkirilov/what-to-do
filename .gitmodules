@@ -1,4 +1,0 @@
-[submodule "current/what-to-do"]
-	path = current/what-to-do
-	url = https://github.com/valkirilov/what-to-do.git
-	branch = gh-pages

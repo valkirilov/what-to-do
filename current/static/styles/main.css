@@ -1,0 +1,99 @@
+
+#what-to-do-extension-123456789 {
+	width: 100%;
+	height: 100%;
+
+	background: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	display: none;
+}
+
+#what-to-do-extension-123456789.opened {
+	display: block;
+}
+
+#what-to-do-extension-123456789.closed {
+	display: none;
+}
+
+#what-to-do-extension-123456789 .wtd-content {
+	width: 640px;
+	height: 480px;
+	background: #efefef;
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -240px 0 0 -320px;
+	padding: 15px;
+}
+
+/**
+ * Header Element
+ */
+
+#what-to-do-extension-123456789 .wtd-content .wtd-header {
+	width: 100%;
+	position: relative;
+	float: left;
+}
+
+#what-to-do-extension-123456789 .wtd-content .wtd-header .wtd-logo {
+	position: relative;
+	float: left;
+}
+
+#what-to-do-extension-123456789 .wtd-content .wtd-header .wtd-close {
+	position: relative;
+	float: right;
+	cursor: pointer;
+}
+
+/**
+ * Body Element
+ */
+
+#what-to-do-extension-123456789 .wtd-content .wtd-body {
+	width: 100%;
+	position: relative;
+	float: left;
+	margin: 30px auto;
+}
+
+#what-to-do-extension-123456789 .wtd-content .wtd-body .wtd-new-option {
+	width: 80%;
+
+	position: relative;
+	margin: 0 auto;
+}
+
+#what-to-do-extension-123456789 .wtd-content .wtd-body .wtd-new-option input.wtd-new-option-input {
+	position: relative;
+	float: left;
+
+	width: 70%;
+}
+#what-to-do-extension-123456789 .wtd-content .wtd-body .wtd-new-option button.wtd-new-option-button {
+	position: relative;
+	float: right;
+
+	width: 20%;
+}
+
+
+/**
+ * Elements
+ */
+
+input.wtd-input {
+	padding: 10px;
+	font-size: 14px;
+}
+
+button.wtd-button {
+	padding: 10px;
+	font-size: 14px;
+}
