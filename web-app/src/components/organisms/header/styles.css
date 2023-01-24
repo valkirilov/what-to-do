@@ -1,0 +1,18 @@
+header {
+  text-align: center;
+  background: #edb950;
+  padding: 1rem;
+}
+
+header span {
+  color: #411e00;
+  display: block;
+}
+
+header .logo {
+  font-family: 'Sofia Sans Condensed', 'Roboto';
+  font-size: 3rem;
+  text-decoration: none;
+  display: block;
+  color: #411e00;
+}
