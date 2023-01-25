@@ -1,0 +1,95 @@
+.cloud {
+  --cloudColor: #ffffff;
+  --cloudSize: 100;
+
+  & {
+    --cloudWidth: calc(var(--cloudSize) * 1px);
+    --cloudHeight: calc(var(--cloudSize) / 3 * 1px);
+    --cloudPositionTop: calc(var(--cloudPositionTopOffset) * 1px);
+    --cloudPositionLeft: calc(var(--cloudPositionLeftOffset) * 1px);
+    --cloudPositionRight: calc(var(--cloudPositionRightOffset) * 1px);
+    
+    position: absolute;
+    border-radius: 150px;
+    background: var(--cloudColor);
+    width: var(--cloudWidth);
+    height: var(--cloudHeight);
+    margin-top: var(--cloudPositionTop);
+    left: var(--cloudPositionLeft); 
+    right: var(--cloudPositionRight); 
+
+    &::before,
+    &::after {
+      box-shadow: 0px -3px 1px rgba(92, 77, 49, 0.1);
+    }
+    
+    &.cloud--variant-1 {
+      &::before {
+        --miniCloudWidth: var(--cloudSize) / 2;
+        --miniCloudHeight: var(--cloudSize) / 2;
+        --miniCloudPositionTop: var(--miniCloudHeight) * -5/8;
+        --miniCloudPositionLeft: var(--miniCloudWidth) / 2/3;
+        
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background: var(--cloudColor);
+        width: calc(var(--miniCloudWidth) * 1px);
+        height: calc(var(--miniCloudHeight) * 1px);
+        top: calc(var(--miniCloudPositionTop) * 1px);
+        left: calc(var(--miniCloudPositionLeft) * 1px);
+      }
+
+      &::after {
+        --miniCloudWidth: var(--cloudSize) / 3;
+        --miniCloudHeight: var(--cloudSize) / 3;
+        --miniCloudPositionTop: var(--miniCloudHeight) / -2;
+        --miniCloudPositionRight: var(--miniCloudWidth) / 2;
+        
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background: var(--cloudColor);
+        width: calc(var(--miniCloudWidth) * 1px);
+        height: calc(var(--miniCloudHeight) * 1px);
+        top: calc(var(--miniCloudPositionTop) * 1px);
+        right: calc(var(--miniCloudPositionRight) * 1px);
+      }
+    }
+
+    &.cloud--variant-2 {
+      &::before {
+        --miniCloudWidth: var(--cloudSize) / 2;
+        --miniCloudHeight: var(--cloudSize) / 2;
+        --miniCloudPositionTop: var(--miniCloudHeight) * -5/8;
+        --miniCloudPositionRight: var(--miniCloudWidth) / 2/3;
+        
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background: var(--cloudColor);
+        width: calc(var(--miniCloudWidth) * 1px);
+        height: calc(var(--miniCloudHeight) * 1px);
+        top: calc(var(--miniCloudPositionTop) * 1px);
+        right: calc(var(--miniCloudPositionRight) * 1px);
+      }
+
+      &::after {
+        --miniCloudWidth: var(--cloudSize) / 3;
+        --miniCloudHeight: var(--cloudSize) / 3;
+        --miniCloudPositionTop: var(--miniCloudHeight) / -2;
+        --miniCloudPositionLeft: var(--miniCloudWidth) / 2;
+        
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background: var(--cloudColor);
+        width: calc(var(--miniCloudWidth) * 1px);
+        height: calc(var(--miniCloudHeight) * 1px);
+        top: calc(var(--miniCloudPositionTop) * 1px);
+        left: calc(var(--miniCloudPositionLeft) * 1px);
+      }
+      
+    }
+  }
+}

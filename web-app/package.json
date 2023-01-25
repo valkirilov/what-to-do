@@ -12,6 +12,7 @@
     "format": "npx prettier --write ."
   },
   "dependencies": {
+    "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -21,6 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "@vitejs/plugin-react": "^3.0.1",
+    "autoprefixer": "^10.4.13",
     "eslint": "^8.32.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -31,8 +33,16 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss-nested": "^6.0.0",
     "prettier": "2.8.3",
     "typescript": "^4.9.4",
     "vite": "^4.0.4"
+  },
+  "postcss": {
+    "map": false,
+    "plugins": {
+      "autoprefixer": {},
+      "postcss-nested": {}
+    }
   }
 }

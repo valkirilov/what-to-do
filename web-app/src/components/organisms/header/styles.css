@@ -2,17 +2,24 @@ header {
   text-align: center;
   background: #edb950;
   padding: 1rem;
+  
+  span {
+    color: #411e00;
+    display: block;
+    line-height: 2rem;
+  }
+  
+  .logo {
+    font-family: 'Sofia Sans Condensed', 'Roboto';
+    font-size: 2.5rem;
+    text-decoration: none;
+    display: block;
+    color: #411e00;
+    
+    @media (min-width: 400px) {
+      font-size: 3rem;
+    }
+  }
 }
 
-header span {
-  color: #411e00;
-  display: block;
-}
 
-header .logo {
-  font-family: 'Sofia Sans Condensed', 'Roboto';
-  font-size: 3rem;
-  text-decoration: none;
-  display: block;
-  color: #411e00;
-}

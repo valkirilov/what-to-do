@@ -26,5 +26,7 @@
       "typescript": {}
     }
   },
-  "rules": {}
+  "rules": {
+    "react/require-default-props": "off"
+  }
 }
