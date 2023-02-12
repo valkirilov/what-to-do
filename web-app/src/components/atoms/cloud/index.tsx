@@ -10,6 +10,7 @@ export enum CloudVariant {
 }
 
 interface CloudProps {
+  id: string
   variant?: CloudVariant
   size?: number
   color?: string
@@ -20,9 +21,10 @@ interface CloudProps {
   }
 }
 
-function Cloud({ variant = CloudVariant.One, size = 100, color = '#ffffff', position }: CloudProps) {
+function Cloud({ id, variant = CloudVariant.One, size = 100, color = '#ffffff', position }: CloudProps) {
   return (
     <div
+      id={id}
       className={`cloud ${variant}`}
       style={
         {

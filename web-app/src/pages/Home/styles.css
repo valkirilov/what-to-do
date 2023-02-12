@@ -1,13 +1,57 @@
 /* TODO: Export the colors as global variables */
 
+main {
+  background: #edb950;
+  display: flex;
+  align-items: center;
+}
+
+/* TODO: Think of a better name, please */
+.main-section {
+  position: relative;
+
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}
+
 section#wheel {
   background: #edb950;
 
   /* TODO: Fix the wheel size on really small devices */
+
+  @media (min-width: 768px) {
+    width: 400px;
+
+    .decorations {
+      position: relative;
+      z-index: 13;
+    }
+  }  
 }
 
 section#intro {
   text-align: center;
+
+  @media (min-width: 768px) {
+    width: 400px;
+    text-align: left;
+
+    .decorations {
+      position: relative;
+
+      #cloud-decoration-1 {
+        margin-top: 5px; /* TODO: Try to override the variable for the offset */
+        z-index: 13;
+      }
+
+      #cloud-decoration-4 {
+        margin-top: -5px; /* TODO: Try to override the variable for the offset */
+        z-index: 13;
+      }
+    }
+  }  
 
   .content {
     background: #edebd8;
@@ -15,11 +59,15 @@ section#intro {
     padding-top: 50px;
     z-index: 10;
     position: relative;
-
+    
     /* TODO: try to export it in a variable or reusable mixin */
     @media (max-width: 320px) {
       padding: 1rem;
       padding-top: 60px;
+    }
+    
+    @media (min-width: 768px) {
+      border-radius: 3rem;
     }
   }
 
@@ -34,6 +82,11 @@ section#intro {
     right: 0;
     top: 100px;
     z-index: 10;
+
+    @media (min-width: 768px) {
+      top: initial;
+      bottom: 0;
+    }
   }
 
   h1 {

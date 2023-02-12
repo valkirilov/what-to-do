@@ -7,7 +7,7 @@ import Wheel from '../../components/organisms/wheel'
 
 function AskPage() {
   return (
-    <div className="App">
+    <>
       <Header />
 
       <main>
@@ -21,7 +21,7 @@ function AskPage() {
           <button type="button">Ask us now</button>
         </section>
       </main>
-    </div>
+    </>
   )
 }
 
